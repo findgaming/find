@@ -1,67 +1,94 @@
-import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { SplashScreen } from 'expo';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Image
+} from 'react-native';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
-
-const Stack = createStackNavigator();
-
-export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-  const [initialNavigationState, setInitialNavigationState] = React.useState();
-  const containerRef = React.useRef();
-  const { getInitialState } = useLinking(containerRef);
-
-  // Load any resources or data that we need prior to rendering the app
-  React.useEffect(() => {
-    async function loadResourcesAndDataAsync() {
-      try {
-        SplashScreen.preventAutoHide();
-
-        // Load our initial navigation state
-        setInitialNavigationState(await getInitialState());
-
-        // Load fonts
-        await Font.loadAsync({
-          ...Ionicons.font,
-          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-        });
-      } catch (e) {
-        // We might want to provide this error information to an error reporting service
-        console.warn(e);
-      } finally {
-        setLoadingComplete(true);
-        SplashScreen.hide();
-      }
-    }
-
-    loadResourcesAndDataAsync();
-  }, []);
-
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return null;
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
+const App = () => {
+  return (
+    <View style={styles.container}>
+      {/* <Image source={require('./image_720.png')} /> */}
+      <Text style={styles.title}>Find!</Text>
+      <TextInput
+        style={styles.username}
+        placeholder="username"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.password}
+        placeholder="password"
+        autoCapitalize="none"
+      />
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.login}>
+          <Text style={styles.loginButton}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.registerButton}>Register</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  title: {
+    color: '#1e73be',
+    fontSize: 45,
+    fontFamily: 'Arial',
+    fontWeight: '600'
+  },
+  username: {
+    height: 40,
+    width: 120,
+    borderColor: 'gray',
+    borderWidth: 1,
+    textAlign: 'center',
+    opacity: 1,
+    borderRadius: 10,
+    margin: 20
+  },
+  password: {
+    height: 40,
+    width: 120,
+    borderColor: 'gray',
+    borderWidth: 1,
+    textAlign: 'center',
+    opacity: 1,
+    borderRadius: 10,
+    margin: -10
+  },
+  buttons: {
+    margin: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  login: {
+    margin: 20,
+  },
+  loginButton: {
+    fontSize: 30,
+    fontFamily: 'Arial',
+    color: '#1e73be',
+    textDecorationLine: 'underline',
+    fontWeight: '500'
+  },
+  registerButton: {
+    fontSize: 30,
+    fontFamily: 'Arial',
+    color: '#1e73be',
+    textDecorationLine: 'underline',
+    fontWeight: '500'
+  }
 });
+
+export default App;
