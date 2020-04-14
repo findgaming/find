@@ -5,6 +5,8 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+// for cross origin, making it needed for cases w/out webpack or proxy
 app.use(cors());
 
 app.get('/test', (req, res) => {
