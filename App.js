@@ -9,8 +9,12 @@ const Stack = createStackNavigator();
 export default () => (
   <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name='HomeScreen' component={HomeScreen} options={{title: 'Find!'}}/>
-      <Stack.Screen name='RegisterScreen' component={RegisterScreen} />
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: 'Find!' }}
+      />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
     </Stack.Navigator>
   </NavigationContainer>
-)
+);
