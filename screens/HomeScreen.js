@@ -25,12 +25,12 @@ const HomeScreen = ({ navigation }) => {
         autoCorrect={false}
       />
       <View style={styles.buttons}>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.login}>
           <Text
             style={styles.loginButton}
-            // onPress={() => navigation.push('CreateRoom')}
+            onPress={() => navigation.push('GameMenuScreen')}
           >
-            Log In
+            Login
           </Text>
         </TouchableOpacity>
         <TouchableOpacity>

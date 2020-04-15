@@ -1,22 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-// const path = require('path');
-const bodyParser = require('body-parser');
 const PORT = 3000;
-
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
+// parsing body
 app.use(express.json());
 
-// app.get('/test', (req, res) => {
-//   console.log('entered /test');
-//   res.send({ testresponse: 'hit test endpoint' });
-// });
-
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/users');
 const messageRouter = require('./routes/messages');
 const lobbyRouter = require('./routes/lobbies');
 const roomRouter = require('./routes/rooms');
@@ -25,10 +17,6 @@ app.use('/users', userRouter);
 app.use('/messages', messageRouter);
 app.use('/lobbies', lobbyRouter);
 app.use('/rooms', roomRouter);
-
-app.use((req, res) => {
-  res.status(404).send('404 PAGE NOT FOUND...');
-});
 
 app.use((err, req, res, next) => {
   const defaultErr = {

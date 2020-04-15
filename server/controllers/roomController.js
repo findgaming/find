@@ -7,49 +7,49 @@ roomController.getRooms = (req, res, next) => {
     FROM Rooms`;
 
   db.query(queryString)
-    .then((response) => {
+    .then(response => {
       res.locals.rooms = response.rows;
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
 
 roomController.addRoom = (req, res, next) => {
-  const { start_time } = req.body;
-  console.log('room', room);
+  const { lobby_id, start_time } = req.body;
 
   const queryString = `
-    INSERT INTO Rooms room VALUES $1
+    INSERT INTO Rooms (name, lobby_id, start_time) VALUES ($1, $2, $3) RETURNING *
     `;
-  const values = [start_time];
+  const values = [lobby_id, start_time];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       res.locals.newRoom = response.rows[0];
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
 
 roomController.deleteRoom = (req, res, next) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
 
   const queryString = `
     DELETE FROM Rooms 
-    WHERE id = $1
+    WHERE id = $1 RETURNING *
     `;
   const values = [id];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       res.locals.deleted = response.rows[0];
+      console.log(response.rows[0]);
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
