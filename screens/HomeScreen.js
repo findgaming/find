@@ -4,10 +4,10 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Find!</Text>
@@ -26,7 +26,12 @@ const HomeScreen = () => {
           <Text style={styles.loginButton}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.registerButton}>Register</Text>
+          <Text
+            style={styles.registerButton}
+            onPress={() => navigation.push('RegisterScreen')}
+          >
+            Register
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -68,10 +73,10 @@ const styles = StyleSheet.create({
   buttons: {
     margin: 20,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   login: {
-    margin: 20,
+    margin: 20
   },
   loginButton: {
     fontSize: 30,
