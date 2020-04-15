@@ -1,94 +1,27 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Image
-} from 'react-native';
+import React, { Component } from 'react';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
-const App = () => {
-  return (
-    <View style={styles.container}>
-      {/* <Image source={require('./image_720.png')} /> */}
-      <Text style={styles.title}>Find!</Text>
-      <TextInput
-        style={styles.username}
-        placeholder="username"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.password}
-        placeholder="password"
-        autoCapitalize="none"
-      />
-      <View style={styles.buttons}>
-        <TouchableOpacity style={styles.login}>
-          <Text style={styles.loginButton}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.registerButton}>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  title: {
-    color: '#1e73be',
-    fontSize: 45,
-    fontFamily: 'Arial',
-    fontWeight: '600'
-  },
-  username: {
-    height: 40,
-    width: 120,
-    borderColor: 'gray',
-    borderWidth: 1,
-    textAlign: 'center',
-    opacity: 1,
-    borderRadius: 10,
-    margin: 20
-  },
-  password: {
-    height: 40,
-    width: 120,
-    borderColor: 'gray',
-    borderWidth: 1,
-    textAlign: 'center',
-    opacity: 1,
-    borderRadius: 10,
-    margin: -10
-  },
-  buttons: {
-    margin: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  login: {
-    margin: 20,
-  },
-  loginButton: {
-    fontSize: 30,
-    fontFamily: 'Arial',
-    color: '#1e73be',
-    textDecorationLine: 'underline',
-    fontWeight: '500'
-  },
-  registerButton: {
-    fontSize: 30,
-    fontFamily: 'Arial',
-    color: '#1e73be',
-    textDecorationLine: 'underline',
-    fontWeight: '500'
+export default class App extends Component {
+  render() {
+    createHomeStack = () => (
+      <Stack.Navigator>
+        {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
+    );
+    return (
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name='HomeScreen' component={HomeScreen}/>
+      </Drawer.Navigator>
+    </NavigationContainer>
+    )
   }
-});
-
-export default App;
+}
