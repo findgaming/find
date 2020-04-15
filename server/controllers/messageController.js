@@ -17,7 +17,7 @@ messageController.getMessages = (req, res, next) => {
 };
 
 messageController.postMessage = (req, res, next) => {
-  const { message } = req.body.message;
+  const { message } = req.body;
 
   const queryString = `
     INSERT INTO Messages message VALUES $1
