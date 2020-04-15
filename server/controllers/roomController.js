@@ -1,14 +1,14 @@
 const db = require('../db/db.js');
-const userController = {};
+const roomController = {};
 
-userController.getUsers = (req, res, next) => {
+roomController.getRooms = (req, res, next) => {
   const queryString = `
     SELECT * 
-    FROM Users`;
+    FROM Rooms`;
 
   db.query(queryString)
     .then((response) => {
-      res.locals.users = response.rows;
+      res.locals.rooms = response.rows;
       next();
     })
     .catch((err) => {
@@ -16,16 +16,18 @@ userController.getUsers = (req, res, next) => {
     });
 };
 
-userController.addUser = (req, res, next) => {
-  const { user } = req.body;
+roomController.addRoom = (req, res, next) => {
+  const { room } = req.body.room;
+  console.log('room', room);
 
   const queryString = `
-    INSERT INTO Users user VALUES $1
+    INSERT INTO Rooms room VALUES $1
     `;
-  const values = [user];
+  const values = [room.start_time];
 
   db.query(queryString, values)
     .then((response) => {
+      res.locals.newRoom = response.rows[0];
       next();
     })
     .catch((err) => {
@@ -33,17 +35,18 @@ userController.addUser = (req, res, next) => {
     });
 };
 
-userController.deleteUser = (req, res, next) => {
-  const { id } = req.body;
+roomController.deleteRoom = (req, res, next) => {
+  const { id } = req.params.id;
 
   const queryString = `
-    DELETE FROM Users 
+    DELETE FROM Rooms 
     WHERE id = $1
     `;
   const values = [id];
 
   db.query(queryString, values)
     .then((response) => {
+      res.locals.deleted = response.rows[0];
       next();
     })
     .catch((err) => {
@@ -51,4 +54,4 @@ userController.deleteUser = (req, res, next) => {
     });
 };
 
-module.exports = userController;
+module.exports = roomController;
