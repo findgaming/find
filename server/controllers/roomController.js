@@ -17,15 +17,17 @@ roomController.getRooms = (req, res, next) => {
 };
 
 roomController.addRoom = (req, res, next) => {
-  const { room } = req.body.room;
+  const { start_time } = req.body;
+  console.log('room', room);
 
   const queryString = `
-    INSERT INTO Rooms lobby VALUES $1
+    INSERT INTO Rooms room VALUES $1
     `;
-  const values = [room];
+  const values = [start_time];
 
   db.query(queryString, values)
     .then((response) => {
+      res.locals.newRoom = response.rows[0];
       next();
     })
     .catch((err) => {
@@ -44,6 +46,7 @@ roomController.deleteRoom = (req, res, next) => {
 
   db.query(queryString, values)
     .then((response) => {
+      res.locals.deleted = response.rows[0];
       next();
     })
     .catch((err) => {
