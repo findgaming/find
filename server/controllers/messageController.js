@@ -2,13 +2,12 @@ const db = require('../db/db.js');
 const messageController = {};
 
 messageController.getMessages = (req, res, next) => {
-  const queryString = `
-    SELECT * 
-    FROM Messages`;
+  const queryString = `SELECT * FROM Messages`;
 
   db.query(queryString)
     .then(response => {
       res.locals.messages = response.rows;
+      console.log('getting Messages');
       return next();
     })
     .catch(err => {
@@ -17,33 +16,33 @@ messageController.getMessages = (req, res, next) => {
 };
 
 messageController.postMessage = (req, res, next) => {
-  const { message } = req.params;
+  const { user_id, room_id, message } = req.body;
 
   const queryString = `
-    INSERT INTO Messages message VALUES $1
+    INSERT INTO Messages (user_id, room_id, message) VALUES ($1 $2 $3) RETURNING *
     `;
-  const values = [message];
+  const values = [user_id, room_id, message];
 
   db.query(queryString, values)
     .then(response => {
-      return next();
+      res.locals.newMessage = response.rows[0];
+      next();
     })
     .catch(err => {
-      retur next(err);
+      return next(err);
     });
 };
 
 messageController.deleteMessage = (req, res, next) => {
-  const { id } = req.params;
+  const id = req.params.id;
 
-  const queryString = `
-  DELETE 
-  FROM Messages 
-  WHERE id = $1`;
+  const queryString = `DELETE FROM Messages WHERE id = $1`;
   const values = [id];
 
   db.query(queryString, values)
     .then(response => {
+      res.locals.deleted = response.rows[0];
+      console.log(response.rows[0]);
       next();
     })
     .catch(err => {

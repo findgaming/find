@@ -4,6 +4,7 @@ const userController = {};
 // grab all users upon this fetch request route
 userController.getUsers = (req, res, next) => {
   const queryString = `SELECT * FROM Users`;
+
   db.query(queryString)
     .then(response => {
       res.locals.users = response.rows;
@@ -25,7 +26,7 @@ userController.addUser = (req, res, next) => {
 
   db.query(queryString, values)
     .then(response => {
-      // res.locals.users = response.rows;
+      res.locals.users = response.rows;
       console.log('User added!');
       return next();
     })
@@ -34,23 +35,26 @@ userController.addUser = (req, res, next) => {
     });
 };
 
-// userController.deleteUser = (req, res, next) => {
-//   const { id } = req.params;
+userController.deleteUser = (req, res, next) => {
+  const id = req.params.id;
 
-//   // refactor
-//   const queryString = `
-//     DELETE FROM Users
-//     WHERE id = $1
-//     `;
-//   const values = [id];
+  console.log(id);
 
-//   db.query(queryString, values)
-//     .then(response => {
-//       next();
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// };
+  const queryString = `
+    DELETE FROM Users
+    WHERE id = $1 RETURNING *
+    `;
 
+  const values = [id];
+
+  db.query(queryString, values)
+    .then(response => {
+      res.locals.deleted = response.rows[0];
+      console.log(response.rows[0]);
+      next();
+    })
+    .catch(err => {
+      next(err);
+    });
+};
 module.exports = userController;
