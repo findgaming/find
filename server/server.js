@@ -28,9 +28,6 @@ app.use((err, req, res, next) => {
   };
 });
 
-// router for users
-app.use('/users', userRouter);
-
 app.get('/*', (req, res, next) => {
   res.status(404).send('404');
 });

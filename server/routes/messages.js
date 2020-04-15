@@ -4,15 +4,15 @@ const messageController = require('../controllers/messageController.js');
 
 const router = express.Router();
 
-router.get('/', messageController.getMessages, (req, res) => {
+router.get('/', messageController.getMessages, (req, res, next) => {
   res.status(200).json(res.locals.messages);
 });
 
-router.post('/', messageController.postMessage, (req, res) => {
-  res.status(200).json(res.locals.newMessage);
+router.post('/', messageController.postMessage, (req, res, next) => {
+  res.status(200).json(res.locals.message);
 });
 
-router.delete('/:id', messageController.deleteMessage, (req, res) => {
+router.delete('/:id', messageController.deleteMessage, (req, res, next) => {
   res.status(200).json(res.locals.deleted);
 });
 
