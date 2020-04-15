@@ -1,19 +1,19 @@
-/* eslint-disable function-paren-newline */
 const express = require('express');
 
-// users controller
 const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get('/', userController.getUsers, (req, res, next) => {
+router.get('/', userController.getUsers, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 
-// posting for the users (users/ password) upon creation
-router.post('/', userController.addUser, (req, res, next) => {
-  res.status(200).json('New User Added!');
+router.post('/', userController.addUser, (req, res) => {
+  res.status(200).json(res.locals.newUser);
 });
 
-// export default router;
+router.delete('/:id', userController.deleteUser, (req, res) => {
+  res.status(200).json(res.locals.deleted);
+});
+
 module.exports = router;

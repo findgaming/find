@@ -36,7 +36,7 @@ messageController.postMessage = (req, res, next) => {
 };
 
 messageController.deleteMessage = (req, res, next) => {
-  const { id } = req.params;
+  const id = req.params.id;
 
   const queryString = `
   DELETE 
