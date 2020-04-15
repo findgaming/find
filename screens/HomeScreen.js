@@ -16,7 +16,6 @@ const HomeScreen = ({ navigation }) => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
-
       />
       <TextInput
         style={styles.password}
@@ -27,7 +26,12 @@ const HomeScreen = ({ navigation }) => {
       />
       <View style={styles.buttons}>
         <TouchableOpacity>
-          <Text style={styles.loginButton}>Log In</Text>
+          <Text
+            style={styles.loginButton}
+            // onPress={() => navigation.push('CreateRoom')}
+          >
+            Log In
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text
@@ -47,14 +51,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fffff0' 
+    backgroundColor: '#fffff0'
   },
   title: {
     color: '#1e73be',
     fontSize: 45,
     fontFamily: 'Arial',
     fontWeight: '600',
-    marginBottom: 20,
+    marginBottom: 20
   },
   username: {
     height: 40,
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     margin: 20,
-    alignItems: 'center',
+    alignItems: 'center'
   },
 
   loginButton: {
