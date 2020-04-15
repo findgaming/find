@@ -34,22 +34,24 @@ lobbyController.addLobby = (req, res, next) => {
     });
 };
 
-// lobbyController.deleteLobby = (req, res, next) => {
-//   const { id } = req.params.id;
+lobbyController.deleteLobby = (req, res, next) => {
+  const id = req.params.id;
 
-//   const queryString = `
-//     DELETE FROM Lobbies
-//     WHERE id = $1
-//     `;
-//   const values = [id];
+  const queryString = `
+    DELETE FROM Lobbies
+    WHERE id = $1
+    `;
+  const values = [id];
 
-//   db.query(queryString, values)
-//     .then((response) => {
-//       next();
-//     })
-//     .catch((err) => {
-//       next(err);
-//     });
-// };
+  db.query(queryString, values)
+    .then((response) => {
+      res.locals.deleted = response.rows[0];
+      console.log(response.rows[0]);
+      next();
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 module.exports = lobbyController;
