@@ -1,17 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-// const path = require('path');
-const bodyParser = require('body-parser');
 const PORT = 3000;
-
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/users');
 const messageRouter = require('./routes/messages');
 const lobbyRouter = require('./routes/lobbies');
 const roomRouter = require('./routes/rooms');
