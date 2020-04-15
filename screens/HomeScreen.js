@@ -23,7 +23,12 @@ const HomeScreen = ({ navigation }) => {
       />
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.login}>
-          <Text style={styles.loginButton}>Login</Text>
+          <Text
+            style={styles.loginButton}
+            onPress={() => navigation.push('GameMenuScreen')}
+          >
+            Login
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text

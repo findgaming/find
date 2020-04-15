@@ -9,29 +9,70 @@ import {
   View,
   Button
 } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-const GameMenuScreen = () => {
+const games = [
+  {
+    title: 'Trivia Murder Party'
+  },
+  {
+    title: 'Role Models'
+  },
+  {
+    title: 'Joke Boat'
+  },
+  {
+    title: 'Dictionarium'
+  },
+  {
+    title: 'Push The Button'
+  },
+  {
+    title: 'Quiplash'
+  },
+  {
+    title: "You Don't Know Jack"
+  },
+  {
+    title: 'Split the Room'
+  },
+  {
+    title: 'Mad Verse City'
+  },
+  {
+    title: 'Zeeple Dome'
+  },
+  {
+    title: 'Patently Stupid'
+  },
+  {
+    title: 'Fibbage'
+  }
+];
+
+const GameMenuScreen = ({ navigation }) => {
   return (
     <View>
       <ScrollView>
-        <Button title="Trivia Murder Party" />
-        <Button title="Role Models" />
-        <Button title="Joke Boat" />
-        <Button title="Dictionarium" />
-        <Button title="Push The Button" />
-        <Button title="Quiplash" />
-        <Button title="You Don't Know Jack" />
-        <Button title="Split the Room" />
-        <Button title="Mad Verse City" />
-        <Button title="Zeeple Dome" />
-        <Button title="Patently Stupid" />
-        <Button title="Fibbage" />
+        {games.map((item, i) => {
+          return (
+            <Button
+              key={i}
+              title={item.title}
+              onPress={() =>
+                navigation.push('LobbyScreen', { title: item.title })
+              }
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default GameMenuScreen;
