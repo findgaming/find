@@ -20,7 +20,7 @@ roomController.addRoom = (req, res, next) => {
   const { lobby_id, start_time } = req.body;
 
   const queryString = `
-    INSERT INTO Rooms (lobby_id, start_time) VALUES ($1, $2) RETURNING *
+    INSERT INTO Rooms (name, lobby_id, start_time) VALUES ($1, $2, $3) RETURNING *
     `;
   const values = [lobby_id, start_time];
 
