@@ -6,11 +6,12 @@ lobbyController.getLobbies = (req, res, next) => {
 
   db.query(queryString)
     .then(response => {
+      // console.log('coming from get lobbies', response.rows);
       res.locals.lobbies = response.rows;
-      next();
+      return next();
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 };
 
@@ -26,10 +27,10 @@ lobbyController.addLobby = (req, res, next) => {
     .then(response => {
       // console.log('response', response);
       res.locals.newLobby = response.rows[0];
-      next();
+      return next();
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 };
 
@@ -50,6 +51,25 @@ lobbyController.deleteLobby = (req, res, next) => {
     })
     .catch(err => {
       next(err);
+    });
+};
+
+// might refacor to bring into rooms router
+// grab rooms where lobby id = $(1)
+
+lobbyController.getAllRoomsFromLobby = (req, res, next) => {
+  const id = req.params.id;
+
+  const queryString = `SELECT * FROM Rooms JOIN Lobbies on Rooms.lobby_id = Lobbies.id WHERE Lobbies.id = ${id};`;
+
+  db.query(queryString)
+    .then(response => {
+      // console.log('coming from get lobbies', response.rows);
+      res.locals.lobbies = response.rows;
+      return next();
+    })
+    .catch(err => {
+      return next(err);
     });
 };
 
