@@ -7,11 +7,6 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// app.get('/test', (req, res) => {
-//   console.log('entered /test');
-//   res.send({ testresponse: 'hit test endpoint' });
-// });
-
 const userRouter = require('./routes/user');
 const messageRouter = require('./routes/messages');
 const lobbyRouter = require('./routes/lobbies');
