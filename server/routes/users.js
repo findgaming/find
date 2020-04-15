@@ -12,7 +12,7 @@ router.get('/', userController.getUsers, (req, res, next) => {
 
 // posting for the users (users/ password) upon creation
 router.post('/', userController.addUser, (req, res, next) => {
-  res.status(200).json('New User Added!');
+  res.status(200).json(res.locals.users);
 });
 
 // export default router;

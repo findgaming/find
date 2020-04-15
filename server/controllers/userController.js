@@ -25,7 +25,7 @@ userController.addUser = (req, res, next) => {
 
   db.query(queryString, values)
     .then(response => {
-      // res.locals.users = response.rows;
+      res.locals.users = response.rows;
       console.log('User added!');
       return next();
     })
