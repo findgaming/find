@@ -7,30 +7,29 @@ messageController.getMessages = (req, res, next) => {
     FROM Messages`;
 
   db.query(queryString)
-    .then(response => {
+    .then((response) => {
       res.locals.messages = response.rows;
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next(err);
     });
 };
 
 messageController.postMessage = (req, res, next) => {
-  const { message } = req.body;
+  const { user_id, room_id, message } = req.body;
 
   const queryString = `
-    INSERT INTO Messages message VALUES $1
+    INSERT INTO Messages (user_id, room_id, message) VALUES ($1 $2 $3)
     `;
-  const values = [message];
+  const values = [user_id, room_id, message];
 
   db.query(queryString, values)
     .then((response) => {
-      response.rows[0];
-      res.locals.newMessage;
+      res.locals.newMessage = response.rows[0];
       next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next(err);
     });
 };
@@ -47,9 +46,10 @@ messageController.deleteMessage = (req, res, next) => {
   db.query(queryString, values)
     .then((response) => {
       res.locals.deleted = response.rows[0];
+      console.log(response.rows[0]);
       next();
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 };
