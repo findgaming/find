@@ -17,7 +17,7 @@ messageController.getMessages = (req, res, next) => {
 };
 
 messageController.postMessage = (req, res, next) => {
-  const { message } = req.params;
+  const { message } = req.body;
 
   const queryString = `
     INSERT INTO Messages message VALUES $1
@@ -26,10 +26,12 @@ messageController.postMessage = (req, res, next) => {
 
   db.query(queryString, values)
     .then(response => {
+      response.rows[0];
+      res.locals.newMessage;
       return next();
     })
     .catch(err => {
-      retur next(err);
+      return next(err);
     });
 };
 
@@ -44,6 +46,7 @@ messageController.deleteMessage = (req, res, next) => {
 
   db.query(queryString, values)
     .then(response => {
+      res.locals.deleted = response.rows[0];
       next();
     })
     .catch(err => {

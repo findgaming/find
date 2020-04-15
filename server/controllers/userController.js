@@ -36,14 +36,12 @@ userController.addUser = (req, res, next) => {
 
 // userController.deleteUser = (req, res, next) => {
 //   const { id } = req.params;
-
 //   // refactor
 //   const queryString = `
 //     DELETE FROM Users
 //     WHERE id = $1
 //     `;
 //   const values = [id];
-
 //   db.query(queryString, values)
 //     .then(response => {
 //       next();
@@ -52,5 +50,4 @@ userController.addUser = (req, res, next) => {
 //       next(err);
 //     });
 // };
-
 module.exports = userController;
