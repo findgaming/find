@@ -18,14 +18,15 @@ messageController.getMessages = (req, res, next) => {
 messageController.postMessage = (req, res, next) => {
   const { user_id, room_id, message } = req.body;
 
-  const queryString = `INSERT INTO Messages (user_id, room_id, message) VALUES ($1, $2, $3) RETURNING *`;
+  const queryString = `
+    INSERT INTO Messages (user_id, room_id, message) VALUES ($1 $2 $3) RETURNING *
+    `;
   const values = [user_id, room_id, message];
 
   db.query(queryString, values)
     .then(response => {
-      res.locals.message = response.rows[0];
-      console.log('NEW MESSAGE CREATED FOR USER');
-      return next();
+      res.locals.newMessage = response.rows[0];
+      next();
     })
     .catch(err => {
       return next(err);
@@ -41,10 +42,11 @@ messageController.deleteMessage = (req, res, next) => {
   db.query(queryString, values)
     .then(response => {
       res.locals.deleted = response.rows[0];
-      return next();
+      console.log(response.rows[0]);
+      next();
     })
     .catch(err => {
-      return next(err);
+      next(err);
     });
 };
 
