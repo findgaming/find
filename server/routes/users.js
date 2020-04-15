@@ -8,11 +8,9 @@ const router = express.Router();
 
 router.get('/', userController.getUsers, (req, res, next) => {
   res.status(200).json(res.locals.users);
-  // res.status(200).json('TESTSESDFSDF');
 });
 
-// posting for the users (users/ password)
-
+// posting for the users (users/ password) upon creation
 router.post('/', userController.addUser, (req, res, next) => {
   res.status(200).json('New User Added!');
 });
