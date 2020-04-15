@@ -12,8 +12,8 @@ router.post('/', lobbyController.addLobby, (req, res) => {
   res.status(200).json(res.locals.newLobby);
 });
 
-// router.delete('/:id', lobbyController.deleteLobby, (req, res) => {
-//   res.status(200).json(res.locals.deleted);
-// });
+router.delete('/:id', lobbyController.deleteLobby, (req, res) => {
+  res.status(200).json(res.locals.deleted);
+});
 
 module.exports = router;
