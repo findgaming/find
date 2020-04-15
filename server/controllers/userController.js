@@ -5,11 +5,11 @@ const userController = {};
 userController.getUsers = (req, res, next) => {
   const queryString = `SELECT * FROM Users`;
   db.query(queryString)
-    .then(response => {
+    .then((response) => {
       res.locals.users = response.rows;
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       console.log('ERROR FROM GETTING USERS');
       return next(err);
     });
@@ -18,32 +18,27 @@ userController.getUsers = (req, res, next) => {
 // add Users & password upon registration
 userController.addUser = (req, res, next) => {
   const { username, password } = req.body;
-
   const queryString = `INSERT INTO Users (username, password) VALUES ($1, $2) RETURNING *`;
-
   const values = [username, password];
-
   db.query(queryString, values)
-    .then(response => {
-      // res.locals.users = response.rows;
+    .then((response) => {
+      res.locals.users = response.rows;
       console.log('User added!');
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next(err);
     });
 };
 
 // userController.deleteUser = (req, res, next) => {
 //   const { id } = req.params;
-
 //   // refactor
 //   const queryString = `
 //     DELETE FROM Users
 //     WHERE id = $1
 //     `;
 //   const values = [id];
-
 //   db.query(queryString, values)
 //     .then(response => {
 //       next();
@@ -52,5 +47,4 @@ userController.addUser = (req, res, next) => {
 //       next(err);
 //     });
 // };
-
 module.exports = userController;

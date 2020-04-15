@@ -6,46 +6,40 @@ const bodyParser = require('body-parser');
 const PORT = 3000;
 
 const app = express();
-// app.use(express.json());
-app.use(bodyParser.json()); // parses out every request body that goes through your server
-// allows you to parse through nested objects passed into your request body; you can use this; allow you to see the HTTP data in key value pairs, coming from the form submission
-app.use(bodyParser.urlencoded({ extended: true }));
+const PORT = 3000;
 
-const usersRouter = require('./routes/users');
-const lobbyRouter = require('./routes/lobby');
-const messageRouter = require('./routes/messages');
-const roomsRouter = require('./routes/rooms');
-
-// for cross origin, making it needed for cases w/out webpack or proxy
 app.use(cors());
+app.use(express.json());
 
-// router for users
-app.use('/users', usersRouter);
-// app.use('/lobby', lobbyRouter);
-// app.use('/messages', messageRouter);
-// app.use('/rooms', roomsRouter);
-
-// // add a user to the table
 // app.get('/test', (req, res) => {
 //   console.log('entered /test');
 //   res.send({ testresponse: 'hit test endpoint' });
 // });
 
-app.get('/*', (req, res, next) => {
-  res.status(404).send('404');
+const userRouter = require('./routes/user');
+const messageRouter = require('./routes/messages');
+const lobbyRouter = require('./routes/lobbies');
+const roomRouter = require('./routes/rooms');
+
+app.use('/users', userRouter);
+app.use('/messages', messageRouter);
+app.use('/lobbies', lobbyRouter);
+app.use('/rooms', roomRouter);
+
+app.use((req, res) => {
+  res.status(404).send('404 PAGE NOT FOUND...');
 });
 
-// sending global error catcher
 app.use((err, req, res, next) => {
-  console.log(err);
   const defaultErr = {
-    log: 'Express error on server side. Middleware may have lost data',
-    // was 503. changed to 500 to be more appropriate
-    status: 500,
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
     message: { err: 'An error occurred' }
   };
-  const errObj = Object.assign(defaultErr, err);
-  res.status(errObj.status).json(errObj.message);
+
+  const errorObj = Object.assign({}, defaultErr, err);
+  res.status(errorObj.status);
+  res.send(errorObj.message);
 });
 
 app.listen(PORT, () => {
