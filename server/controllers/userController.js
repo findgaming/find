@@ -18,14 +18,11 @@ userController.getUsers = (req, res, next) => {
 // add Users & password upon registration
 userController.addUser = (req, res, next) => {
   const { username, password } = req.body;
-
   const queryString = `INSERT INTO Users (username, password) VALUES ($1, $2) RETURNING *`;
-
   const values = [username, password];
-
   db.query(queryString, values)
     .then((response) => {
-      // res.locals.users = response.rows;
+      res.locals.users = response.rows;
       console.log('User added!');
       return next();
     })
@@ -36,14 +33,12 @@ userController.addUser = (req, res, next) => {
 
 // userController.deleteUser = (req, res, next) => {
 //   const { id } = req.params;
-
 //   // refactor
 //   const queryString = `
 //     DELETE FROM Users
 //     WHERE id = $1
 //     `;
 //   const values = [id];
-
 //   db.query(queryString, values)
 //     .then(response => {
 //       next();
@@ -52,3 +47,4 @@ userController.addUser = (req, res, next) => {
 //       next(err);
 //     });
 // };
+module.exports = userController;

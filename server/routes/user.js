@@ -12,8 +12,8 @@ router.post('/', userController.addUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 });
 
-router.delete('/:id', userController.deleteUser, (req, res) => {
-  res.status(200).json(res.locals.deleted);
-});
+// router.delete('/:id', userController.deleteUser, (req, res) => {
+//   res.status(200).json(res.locals.deleted);
+// });
 
 module.exports = router;
