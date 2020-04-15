@@ -5,6 +5,7 @@ const PORT = 3000;
 const app = express();
 
 app.use(cors());
+// parsing body
 app.use(express.json());
 
 const userRouter = require('./routes/users');
@@ -16,10 +17,6 @@ app.use('/users', userRouter);
 app.use('/messages', messageRouter);
 app.use('/lobbies', lobbyRouter);
 app.use('/rooms', roomRouter);
-
-app.use((req, res) => {
-  res.status(404).send('404 PAGE NOT FOUND...');
-});
 
 app.use((err, req, res, next) => {
   const defaultErr = {
