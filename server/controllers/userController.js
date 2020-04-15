@@ -1,37 +1,36 @@
-const db = require('../db/db.js');
+const db = require('../db/db');
 const userController = {};
 
 // grab all users upon this fetch request route
 userController.getUsers = (req, res, next) => {
-  const queryString = `
-    SELECT * 
-    FROM Users`;
-
+  const queryString = `SELECT * FROM Users`;
   db.query(queryString)
     .then(response => {
       res.locals.users = response.rows;
-      next();
+      return next();
     })
     .catch(err => {
-      next(err);
+      console.log('ERROR FROM GETTING USERS');
+      return next(err);
     });
 };
 
 // add Users & password
 userController.addUser = (req, res, next) => {
-  const { user, pass } = req.body;
+  const { username, password } = req.body;
 
-  const queryString = `INSERT INTO Users (user, pass) VALUES ($1, $2) RETURNING *`;
+  const queryString = `INSERT INTO Users (username, password) VALUES ($1, $2) RETURNING *`;
 
-  const values = [user, pass];
+  const values = [username, password];
 
   db.query(queryString, values)
     .then(response => {
-      res.locals.users = response.rows;
-      next();
+      // res.locals.users = response.rows;
+      console.log('User added!');
+      return next();
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 };
 
@@ -54,4 +53,4 @@ userController.addUser = (req, res, next) => {
 //     });
 // };
 
-module.exports = { userController };
+module.exports = userController;
