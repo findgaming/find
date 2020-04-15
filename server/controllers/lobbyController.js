@@ -5,11 +5,12 @@ lobbyController.getLobbies = (req, res, next) => {
   const queryString = `SELECT * FROM Lobbies`;
 
   db.query(queryString)
-    .then(response => {
+    .then((response) => {
+      console.log('hello');
       res.locals.lobbies = response.rows;
       next();
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 };
@@ -23,12 +24,12 @@ lobbyController.addLobby = (req, res, next) => {
   const values = [name, min_players, max_players];
 
   db.query(queryString, values)
-    .then(response => {
+    .then((response) => {
       // console.log('response', response);
       res.locals.newLobby = response.rows[0];
       next();
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 };
@@ -43,12 +44,12 @@ lobbyController.deleteLobby = (req, res, next) => {
   const values = [id];
 
   db.query(queryString, values)
-    .then(response => {
+    .then((response) => {
       res.locals.deleted = response.rows[0];
       console.log(response.rows[0]);
       next();
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 };

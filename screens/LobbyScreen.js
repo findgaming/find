@@ -16,10 +16,11 @@ const LobbyScreen = ({ route, navigation }) => {
   const { title } = route.params;
 
   async function getLobbies(id) {
-    await fetch(`/lobbies/${id}`)
+    await fetch(`http://localhost:3000/lobbies`)
       .then((data) => data.json())
       .then((myJson) => console.log(myJson));
   }
+  getLobbies();
 
   // const lobbies = getLobbies(title);
   const lobbies = ['eliot', 'brian', 'tyler', 'james'];
