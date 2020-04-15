@@ -7,12 +7,12 @@ messageController.getMessages = (req, res, next) => {
     FROM Messages`;
 
   db.query(queryString)
-    .then((response) => {
+    .then(response => {
       res.locals.messages = response.rows;
-      next();
+      return next();
     })
-    .catch((err) => {
-      next(err);
+    .catch(err => {
+      return next(err);
     });
 };
 
@@ -25,11 +25,11 @@ messageController.postMessage = (req, res, next) => {
   const values = [message];
 
   db.query(queryString, values)
-    .then((response) => {
-      next();
+    .then(response => {
+      return next();
     })
-    .catch((err) => {
-      next(err);
+    .catch(err => {
+      retur next(err);
     });
 };
 
@@ -43,10 +43,10 @@ messageController.deleteMessage = (req, res, next) => {
   const values = [id];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
