@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 // const path = require('path');
@@ -29,6 +30,23 @@ app.use('/users', usersRouter);
 //   console.log('entered /test');
 //   res.send({ testresponse: 'hit test endpoint' });
 // });
+
+app.get('/*', (req, res, next) => {
+  res.status(404).send('404');
+});
+
+// sending global error catcher
+app.use((err, req, res, next) => {
+  console.log(err);
+  const defaultErr = {
+    log: 'Express error on server side. Middleware may have lost data',
+    // was 503. changed to 500 to be more appropriate
+    status: 500,
+    message: { err: 'An error occurred' }
+  };
+  const errObj = Object.assign(defaultErr, err);
+  res.status(errObj.status).json(errObj.message);
+});
 
 app.listen(PORT, () => {
   console.log('server is listening on port: ', PORT);
