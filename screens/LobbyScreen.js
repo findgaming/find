@@ -13,7 +13,9 @@ import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const LobbyScreen = ({ route, navigation }) => {
-  const { title } = route.params;
+  const { title, id } = route.params;
+
+  console.log('[id, title]: ', [id, title]);
 
   async function getLobbies(id) {
     await fetch(`http://localhost:3000/lobbies/${id}`)
@@ -22,7 +24,8 @@ const LobbyScreen = ({ route, navigation }) => {
   }
   getLobbies();
 
-  // const lobbies = getLobbies(title);
+  // const fetchedLobbies = getLobbies(id);
+
   const lobbies = [
     "Eliot's lobby",
     "Brian's lobby",
@@ -32,18 +35,17 @@ const LobbyScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text>Lobby</Text>
-      <Text>{title}</Text>
       <ScrollView>
         {lobbies
           ? lobbies.map((elem, i) => {
               return (
-                <Button
+                <ListItem
                   key={i}
                   title={elem}
                   onPress={() =>
                     navigation.push('ChatRoomScreen', { title: elem })
                   }
+                  chevron
                 />
               );
             })
