@@ -17,13 +17,13 @@ roomController.getRooms = (req, res, next) => {
 };
 
 roomController.addRoom = (req, res, next) => {
-  const { room } = req.body.room;
+  const { start_time } = req.body;
   console.log('room', room);
 
   const queryString = `
     INSERT INTO Rooms room VALUES $1
     `;
-  const values = [room.start_time];
+  const values = [start_time];
 
   db.query(queryString, values)
     .then((response) => {

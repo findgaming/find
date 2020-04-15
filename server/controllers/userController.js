@@ -1,61 +1,54 @@
-const db = require('../db/db.js');
+const db = require('../db/db');
 const userController = {};
 
+// grab all users upon this fetch request route
 userController.getUsers = (req, res, next) => {
-  const queryString = `
-    SELECT * 
-    FROM Users`;
-
+  const queryString = `SELECT * FROM Users`;
   db.query(queryString)
     .then((response) => {
       res.locals.users = response.rows;
-      next();
+      return next();
     })
     .catch((err) => {
-      next(err);
+      console.log('ERROR FROM GETTING USERS');
+      return next(err);
     });
 };
 
+// add Users & password upon registration
 userController.addUser = (req, res, next) => {
-  const { user } = req.body.user;
+  const { username, password } = req.body;
 
-  const queryString = `
-    INSERT INTO Users user VALUES $1 $2 $3 $4 $5
-    `;
-  const values = [
-    user.room_id,
-    user.username,
-    user.password,
-    user.email,
-    user.admin
-  ];
+  const queryString = `INSERT INTO Users (username, password) VALUES ($1, $2) RETURNING *`;
+
+  const values = [username, password];
 
   db.query(queryString, values)
     .then((response) => {
-      res.locals.newUser = response.rows[0];
-      next();
+      // res.locals.users = response.rows;
+      console.log('User added!');
+      return next();
     })
     .catch((err) => {
-      next(err);
+      return next(err);
     });
 };
 
-userController.deleteUser = (req, res, next) => {
-  const { id } = req.params.id;
+// userController.deleteUser = (req, res, next) => {
+//   const { id } = req.params;
 
-  const queryString = `
-    DELETE FROM Users 
-    WHERE id = $1
-    `;
-  const values = [id];
+//   // refactor
+//   const queryString = `
+//     DELETE FROM Users
+//     WHERE id = $1
+//     `;
+//   const values = [id];
 
-  db.query(queryString, values)
-    .then((response) => {
-      next();
-    })
-    .catch((err) => {
-      next(err);
-    });
-};
-
-module.exports = userController;
+//   db.query(queryString, values)
+//     .then(response => {
+//       next();
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// };
