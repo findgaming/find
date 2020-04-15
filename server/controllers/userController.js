@@ -17,7 +17,6 @@ userController.getUsers = (req, res, next) => {
 
 // add Users & password upon registration
 userController.addUser = (req, res, next) => {
-  console.log('adding user stops here');
   const { username, password } = req.body;
 
   const queryString = `INSERT INTO Users (username, password) VALUES ($1, $2) RETURNING *`;
