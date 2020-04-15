@@ -12,9 +12,13 @@ export default () => (
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ title: 'Find!' }}
+        options={{ title: 'Home' }}
       />
-      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{ title: 'Register' }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );
