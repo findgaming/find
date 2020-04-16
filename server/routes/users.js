@@ -12,8 +12,16 @@ router.post('/', userController.addUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 });
 
+router.patch('/', userController.updateRoom, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
+
 router.delete('/:id', userController.deleteUser, (req, res) => {
   res.status(200).json(res.locals.deleted);
+});
+
+router.get('/login', userController.returnUser, (req, res) => {
+  res.status(200).json(res.locals.user);
 });
 
 module.exports = router;

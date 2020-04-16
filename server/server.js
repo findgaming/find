@@ -1,22 +1,43 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const PORT = 3000;
+const http = require('http');
+const socketio = require('socket.io');
+
 const app = express();
 
 app.use(cors());
-// parsing body
-app.use(express.json());
+
+const server = http.Server(app);
+const io = socketio(server);
+// server.listen(3000, () => console.log(*'listenint on *:3000'));
 
 const userRouter = require('./routes/users');
 const messageRouter = require('./routes/messages');
 const lobbyRouter = require('./routes/lobbies');
 const roomRouter = require('./routes/rooms');
 
+const PORT = 3000;
+
+// parsing body
+app.use(express.json());
+
 app.use('/users', userRouter);
 app.use('/messages', messageRouter);
 app.use('/lobbies', lobbyRouter);
 app.use('/rooms', roomRouter);
+
+io.on('connection', (socket) => {
+  console.log('a user has connected');
+  socket.on('chat message', (msg) => {
+    console.log(msg);
+    io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', function () {
+    io.emit('user disconnected');
+  });
+});
 
 app.use((err, req, res, next) => {
   const defaultErr = {
@@ -30,6 +51,8 @@ app.use((err, req, res, next) => {
   res.send(errorObj.message);
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('server is listening on port: ', PORT);
 });
+
+const getApiAndEmit = async (socket) => {};
