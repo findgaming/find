@@ -23,18 +23,15 @@ const ChatRoomScreen = ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   let chatMessages;
 
-  useEffect(() => {
-    // console.log('here is the object: ', sock);
-    socket.on('chat message', (msg) => {
-      console.log('inside socket.on useEffect: ', msg);
-      setMessages(messages.push(msg));
-      console.log('postsetmessages: ', messages);
-    });
+  // useEffect(() => {}, []);
 
-    chatMessages = messages.map((chatMessage) => (
-      <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>
-    ));
-  }, []);
+  socket.on('chat message', (msg) => {
+    setMessages(messages.concat(msg));
+  });
+
+  chatMessages = messages.map((chatMessage) => {
+    return <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>;
+  });
 
   function submitChatMessage() {
     socket.emit('chat message', myMessage);
@@ -44,7 +41,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      {chatMessages}
       <TextInput
         style={{ height: 40, borderWidth: 2, top: 600 }}
         autoCorrect={false}
@@ -52,6 +48,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
         onSubmitEditing={submitChatMessage}
         onChangeText={(value) => setMyMessage(value)}
       />
+      {chatMessages}
     </View>
   );
 };

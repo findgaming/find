@@ -16,15 +16,24 @@ const LobbyScreen = ({ route, navigation }) => {
   const { title, id } = route.params;
 
   console.log('[id, title]: ', [id, title]);
+  let fetchedLobbies;
 
   async function getLobbies(id) {
+    console.log('inside this function');
     await fetch(`http://localhost:3000/lobbies/${id}`)
       .then((data) => data.json())
-      .then((myJson) => console.log(myJson));
+      .then((myJson) => {
+        console.log('fetched data');
+        fetchedLobbies = myJson;
+        console.log(myJson);
+      });
   }
-  getLobbies();
 
-  // const fetchedLobbies = getLobbies(id);
+  React.useEffect(() => {
+    getLobbies(id);
+  });
+
+  // getLobbies(id);
 
   const lobbies = [
     "Eliot's lobby",
@@ -36,8 +45,8 @@ const LobbyScreen = ({ route, navigation }) => {
   return (
     <View>
       <ScrollView>
-        {lobbies
-          ? lobbies.map((elem, i) => {
+        {fetchedLobbies !== undefined
+          ? fetchedLobbies.map((elem, i) => {
               return (
                 <ListItem
                   key={i}
