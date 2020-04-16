@@ -28,7 +28,11 @@ export default () => (
         component={CreateRoom}
         options={{ title: 'Create Room' }}
       />
-      <Stack.Screen name="GameMenuScreen" component={GameMenuScreen} />
+      <Stack.Screen
+        name="GameMenuScreen"
+        component={GameMenuScreen}
+        options={({ route }) => ({ username: route.params.username })}
+      />
       <Stack.Screen
         name="LobbyScreen"
         options={({ route }) => ({ title: route.params.title })}
