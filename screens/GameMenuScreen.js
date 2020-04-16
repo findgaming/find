@@ -16,40 +16,24 @@ import { MonoText } from '../components/StyledText';
 
 const games = [
   {
+    id: '14',
+    title: 'Quip Lash 2'
+  },
+  {
+    id: '15',
     title: 'Trivia Murder Party'
   },
   {
-    title: 'Role Models'
+    id: '16',
+    title: 'Guesspionage'
   },
   {
-    title: 'Joke Boat'
+    id: '17',
+    title: "Fakin' It"
   },
   {
-    title: 'Dictionarium'
-  },
-  {
-    title: 'Push The Button'
-  },
-  {
-    title: 'Quiplash'
-  },
-  {
-    title: "You Don't Know Jack"
-  },
-  {
-    title: 'Split the Room'
-  },
-  {
-    title: 'Mad Verse City'
-  },
-  {
-    title: 'Zeeple Dome'
-  },
-  {
-    title: 'Patently Stupid'
-  },
-  {
-    title: 'Fibbage'
+    id: '18',
+    title: 'Tee K.O.'
   }
 ];
 
@@ -59,11 +43,14 @@ const GameMenuScreen = ({ navigation }) => {
       <ScrollView>
         {games.map((item, i) => {
           return (
-            <Button
+            <ListItem
               key={i}
               title={item.title}
               onPress={() =>
-                navigation.push('LobbyScreen', { title: item.title })
+                navigation.push('LobbyScreen', {
+                  title: item.title,
+                  id: item.id
+                })
               }
             />
           );

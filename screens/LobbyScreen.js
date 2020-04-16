@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   Platform,
@@ -13,30 +13,47 @@ import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const LobbyScreen = ({ route, navigation }) => {
-  const { title } = route.params;
+  const { title, id } = route.params;
+  const [fetchedLobbies, setFetchedLobbies] = useState([]);
+
+  console.log('[id, title]: ', [id, title]);
+
+  useEffect(() => {
+    console.log('inside useEffect');
+    getLobbies(id);
+  }, []);
 
   async function getLobbies(id) {
-    await fetch(`http://localhost:3000/lobbies`)
+    console.log('inside this function');
+    await fetch(`http://localhost:3000/lobbies/${id}`)
       .then((data) => data.json())
-      .then((myJson) => console.log(myJson));
+      .then((myJson) => {
+        console.log('fetched data');
+        setFetchedLobbies(myJson);
+        console.log(myJson);
+      });
   }
-  getLobbies();
 
-  // const lobbies = getLobbies(title);
-  const lobbies = ['eliot', 'brian', 'tyler', 'james'];
+  const lobbies = [
+    "Eliot's lobby",
+    "Brian's lobby",
+    "Tyler's lobby",
+    "James' lobby"
+  ];
 
   return (
     <View>
-      <Text>Lobby</Text>
-      <Text>{title}</Text>
       <ScrollView>
-        {lobbies
-          ? lobbies.map((elem, i) => {
+        {fetchedLobbies !== undefined
+          ? fetchedLobbies.map((elem, i) => {
               return (
-                <Button
+                <ListItem
                   key={i}
-                  title={elem}
-                  onPress={() => navigation.push('RoomScreen', { title: elem })}
+                  title={elem.name}
+                  onPress={() =>
+                    navigation.push('ChatRoomScreen', { title: elem.name })
+                  }
+                  chevron
                 />
               );
             })
