@@ -12,11 +12,27 @@ import {
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
+const styles = StyleSheet.create({
+  createRoom: {
+    alignSelf: 'flex-end',
+    flexWrap: 'nowrap',
+    backgroundColor: '#3498DB',
+    borderBottomColor: '#2980B9',
+    borderBottomWidth: '5px',
+    textAlign: 'center',
+    borderRadius: '15px',
+    paddingHorizontal: '20px',
+    zIndex: '99',
+    color: '#fff'
+  }
+});
+
 const LobbyScreen = ({ route, navigation }) => {
   const { title, id } = route.params;
+
   const [fetchedLobbies, setFetchedLobbies] = useState([]);
 
-  console.log('[id, title]: ', [id, title]);
+  // console.log('[id, title]: ', [id, title]);
 
   useEffect(() => {
     console.log('inside useEffect');
@@ -26,11 +42,9 @@ const LobbyScreen = ({ route, navigation }) => {
   async function getLobbies(id) {
     console.log('inside this function');
     await fetch(`http://localhost:3000/lobbies/${id}`)
-      .then((data) => data.json())
-      .then((myJson) => {
-        console.log('fetched data');
+      .then(data => data.json())
+      .then(myJson => {
         setFetchedLobbies(myJson);
-        console.log(myJson);
       });
   }
 
@@ -40,9 +54,22 @@ const LobbyScreen = ({ route, navigation }) => {
     "Tyler's lobby",
     "James' lobby"
   ];
-
+  console.log('fetched LOBBIES', fetchedLobbies);
   return (
     <View>
+      <TouchableOpacity>
+        <Text
+          style={styles.createRoom}
+          lobbyId={id}
+          onPress={() =>
+            navigation.push('CreateRoom', {
+              lobbyId: id
+            })
+          }
+        >
+          Create Room
+        </Text>
+      </TouchableOpacity>
       <ScrollView>
         {fetchedLobbies !== undefined
           ? fetchedLobbies.map((elem, i) => {

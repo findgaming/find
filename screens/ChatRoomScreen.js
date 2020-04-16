@@ -25,11 +25,11 @@ const ChatRoomScreen = ({ route, navigation }) => {
 
   // useEffect(() => {}, []);
 
-  socket.on('chat message', (msg) => {
+  socket.on('chat message', msg => {
     setMessages(messages.concat(msg));
   });
 
-  chatMessages = messages.map((chatMessage) => {
+  chatMessages = messages.map(chatMessage => {
     return <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>;
   });
 
@@ -46,7 +46,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
         autoCorrect={false}
         value={myMessage}
         onSubmitEditing={submitChatMessage}
-        onChangeText={(value) => setMyMessage(value)}
+        onChangeText={value => setMyMessage(value)}
       />
       {chatMessages}
     </View>

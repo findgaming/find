@@ -6,11 +6,11 @@ userController.getUsers = (req, res, next) => {
   const queryString = `SELECT * FROM Users`;
 
   db.query(queryString)
-    .then((response) => {
+    .then(response => {
       res.locals.users = response.rows;
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('ERROR FROM GETTING USERS');
       return next(err);
     });
@@ -24,11 +24,11 @@ userController.updateRoom = (req, res, next) => {
     WHERE Users.id = ${id}`;
 
   db.query(queryString)
-    .then((response) => {
+    .then(response => {
       res.locals.user = response.rows[0];
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('ERROR FROM UPDATING ROOM_ID');
       return next(err);
     });
@@ -43,12 +43,12 @@ userController.addUser = (req, res, next) => {
   const values = [username, password];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       res.locals.users = response.rows;
       console.log('User added!');
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       return next(err);
     });
 };
@@ -61,13 +61,12 @@ userController.returnUser = (req, res, next) => {
 
   const queryString = `SELECT * FROM Users WHERE Users.username = '${username}' AND Users.password = '${password}'`;
 
-  console.log(queryString);
   db.query(queryString)
-    .then((response) => {
+    .then(response => {
       res.locals.user = response.rows[0];
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       return next(err);
     });
 };
@@ -85,12 +84,12 @@ userController.deleteUser = (req, res, next) => {
   const values = [id];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       res.locals.deleted = response.rows[0];
       console.log(response.rows[0]);
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
