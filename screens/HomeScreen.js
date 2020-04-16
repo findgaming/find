@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,28 @@ import {
 } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const objToSend = {
+    username,
+    password
+  };
+  function loginUser() {
+    fetch(`http://localhost:3000/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(objToSend)
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Find!</Text>
@@ -28,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.login}>
           <Text
             style={styles.loginButton}
-            onPress={() => navigation.push('GameMenuScreen')}
+            onPress={() => navigation.push('GameMenuScreen') || loginUser()}
           >
             Login
           </Text>

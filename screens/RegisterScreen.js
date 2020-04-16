@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -7,10 +7,30 @@ import {
   StyleSheet
 } from 'react-native';
 
-//username
-//password
+const RegisterScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const objToSend = {
+    username,
+    password
+  };
+  function addUser() {
+    fetch(`http://localhost:3000/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(objToSend)
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
-const RegisterScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Some logo up here</Text>
@@ -19,7 +39,7 @@ const RegisterScreen = () => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
-
+        onChangeText={(value) => setUsername(value)}
       />
       <TextInput
         style={styles.password}
@@ -27,9 +47,15 @@ const RegisterScreen = () => {
         autoCapitalize="none"
         secureTextEntry={true}
         autoCorrect={false}
+        onChangeText={(value) => setPassword(value)}
       />
       <TouchableOpacity style={styles.signup}>
-        <Text style={styles.signupButton}>Sign up</Text>
+        <Text
+          style={styles.signupButton}
+          onPress={() => navigation.push('GameMenuScreen') || addUser()}
+        >
+          Sign up
+        </Text>
       </TouchableOpacity>
       <Text style={styles.contract}>
         By signing up, you agree to our Terms, Data Policy and Cookies Policy.
@@ -80,7 +106,7 @@ const styles = StyleSheet.create({
   contract: {
     textAlign: 'center',
     fontSize: 15,
-    fontFamily: 'Arial',
+    fontFamily: 'Arial'
   }
 });
 
