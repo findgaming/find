@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,42 @@ import {
 } from 'react-native';
 
 // create room and set it to DATABASE
-const CreateRoom = () => {
+const CreateRoom = ({ route }) => {
+  const admin = 1;
+  const { lobbyId } = route.params;
+  const [roomName, setRoomName] = useState('');
+  const [players, setPlayers] = useState(0);
+  const [start, setStart] = useState('12:00:00');
+  // console.log('coming from lobbyID:', lobbyId);
+  // console.log('coming from roomName:', roomName);
+  // console.log('coming from players:', players);
+  // console.log('coming from start:', start);
+
+  // object to send in POST request
+  const newRoomBody = {
+    lobby_id: lobbyId,
+    start_time: start,
+    name: roomName,
+    admin
+  };
+
+  // function to wrap everything in object and send off to backend
+  function submitNewRoom() {
+    console.log(newRoomBody, 'success in new room');
+    fetch(`http://localhost:3000/rooms`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(newRoomBody)
+    })
+      .then(data => data.json())
+      .then(myJson => {
+        console.log(myJson);
+      })
+      .catch(err => {
+        console.log(`error: ${err}`);
+      });
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.lobbyName}>Room Name</Text>
@@ -16,6 +51,7 @@ const CreateRoom = () => {
         style={styles.input}
         autoCapitalize="none"
         autoCorrect={false}
+        onChangeText={value => setRoomName(value)}
       />
       <Text style={styles.players}>Players</Text>
       <TextInput
@@ -23,6 +59,7 @@ const CreateRoom = () => {
         autoCapitalize="none"
         autoCorrect={false}
         keyboardType="numeric"
+        onChangeText={value => setPlayers(value)}
       />
       <Text style={styles.startTime}>Start Time</Text>
       <TextInput
@@ -30,17 +67,27 @@ const CreateRoom = () => {
         autoCapitalize="none"
         autoCorrect={false}
         placeholder="Please enter time in form of HH:mm:00"
+        onChangeText={value => setStart(value)}
       />
 
+      {/* move this initial KEY logic as entered KEY into chat rooms */}
+      {/* 
       <Text style={styles.initialKey}>Initial Key</Text>
       <TextInput
         style={styles.input}
         autoCapitalize="none"
         autoCorrect={false}
-      />
+      /> */}
 
       <TouchableOpacity style={styles.create}>
-        <Text style={styles.createText}>Create</Text>
+        <Text
+          onPress={() => {
+            submitNewRoom();
+          }}
+          style={styles.createText}
+        >
+          Create
+        </Text>
       </TouchableOpacity>
     </View>
   );
