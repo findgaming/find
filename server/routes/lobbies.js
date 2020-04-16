@@ -12,7 +12,7 @@ router.get('/', lobbyController.getLobbies, (req, res) => {
 // grab rooms where lobby id = $(1)
 
 router.get('/:id', lobbyController.getAllRoomsFromLobby, (req, res) => {
-  console.log('added room from lobbies');
+  console.log('hitting AFTER get all rooms');
   res.status(200).json(res.locals.lobbies);
 });
 
