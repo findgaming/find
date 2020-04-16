@@ -28,7 +28,11 @@ const ChatRoomScreen = ({ route, navigation }) => {
   });
 
   chatMessages = messages.map((chatMessage) => {
-    return <Text style={styles.chatMessage}>{chatMessage}</Text>;
+    return (
+      <Text style={styles.chatMessage}>
+        {username}: {chatMessage}
+      </Text>
+    );
   });
 
   function submitChatMessage() {
@@ -41,11 +45,21 @@ const ChatRoomScreen = ({ route, navigation }) => {
     <View>
       <TextInput
         style={styles.input}
+        placeholder="Send a message"
         autoCorrect={false}
         value={myMessage}
         onSubmitEditing={submitChatMessage}
         onChangeText={(value) => setMyMessage(value)}
       />
+      <TouchableOpacity>
+        <Text
+          onPress={() => {
+            submitChatMessage;
+          }}
+        >
+          Send
+        </Text>
+      </TouchableOpacity>
       {chatMessages}
     </View>
   );
@@ -68,7 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: '2%',
     paddingRight: '2%',
-    // borderWidth: 2,
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
