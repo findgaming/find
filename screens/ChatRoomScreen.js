@@ -17,21 +17,6 @@ import io from 'socket.io-client';
 
 import { MonoText } from '../components/StyledText';
 
-// const styles = StyleSheet.create({
-//   playButton: {
-//     alignSelf: 'center',
-//     flexWrap: 'nowrap',
-//     backgroundColor: '#3498DB',
-//     borderBottomColor: '#2980B9',
-//     borderBottomWidth: '5px',
-//     textAlign: 'center',
-//     borderRadius: '15px',
-//     paddingHorizontal: '20px',
-//     zIndex: '99',
-//     color: '#fff'
-//   }
-// });
-
 const socket = io('http://localhost:3000');
 
 const PlayLink = () => (
@@ -52,7 +37,7 @@ const PlayLink = () => (
         boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
         color: '#fff',
         fontWeight: '900',
-        marginTop: '10px',
+        marginTop: '50px',
         marginBottom: '10px',
         width: '100vw'
       }}
@@ -92,6 +77,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
   return (
     <View>
       <CountDown
+        style={{ marginBottom: '10px' }}
         until={1}
         onFinish={() => {
           setPlay(true);
@@ -100,17 +86,24 @@ const ChatRoomScreen = ({ route, navigation }) => {
         size={30}
       />
       {play ? (
-        <div>
+        <center>
           <PlayLink></PlayLink>
-          <center>
+          <center style={{ textAlign: 'center' }}>
             <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
-              <View>
+              <View
+                style={{
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
                 <Text
                   style={{
-                    color: '#fff',
+                    color: '#008000',
                     fontSize: 14,
                     backgroundColor: '#00FF7F',
                     fontFamily: 'Arial',
+                    fontWeight: '900',
                     fontStyle: 'bold',
                     textAlign: 'center',
                     paddingTop: '10px',
@@ -121,7 +114,9 @@ const ChatRoomScreen = ({ route, navigation }) => {
                     borderBottomColor: '#008000',
                     boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
                     marginTop: '10px',
-                    marginBottom: '10px'
+                    marginBottom: '10px',
+                    width: '20%',
+                    borderRadius: '8px'
                   }}
                 >
                   SCFB
@@ -129,22 +124,8 @@ const ChatRoomScreen = ({ route, navigation }) => {
               </View>
             </TouchableOpacity>
           </center>
-        </div>
+        </center>
       ) : null}
-      {/* textDecoration: 'none',
-        backgroundColor: '#3498DB',
-        paddingTop: '10px',
-        paddingRight: '8px',
-        paddingLeft: '8px',
-        paddingBottom: '10px',
-        borderBottomWidth: '5px',
-        borderBottomColor: '#2980B9',
-        borderRadius: '8px',
-        boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
-        color: '#fff',
-        fontWeight: '900',
-        marginTop: '10px',
-        marginBottom: '10px' */}
       <TextInput
         style={styles.input}
         placeholder="Send a message"
