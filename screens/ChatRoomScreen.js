@@ -67,20 +67,24 @@ const ChatRoomScreen = ({ route, navigation }) => {
   const [play, setPlay] = useState(false);
   let chatMessages;
 
-  socket.on('chat message', msg => {
+  socket.on('chat message', (msg) => {
     setMessages(messages.concat(msg));
   });
 
-  chatMessages = messages.map(chatMessage => {
+  chatMessages = messages.map((chatMessage) => {
     return (
       <Text style={styles.chatMessage}>
-        {username}: {chatMessage}
+        {chatMessage.username}: {chatMessage.message}
       </Text>
     );
   });
 
   function submitChatMessage() {
-    socket.emit('chat message', myMessage);
+    const messageObj = {
+      username: username,
+      message: myMessage
+    };
+    socket.emit('chat message', messageObj);
     console.log(myMessage);
     setMyMessage('');
   }
@@ -113,7 +117,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
         autoCorrect={false}
         value={myMessage}
         onSubmitEditing={submitChatMessage}
-        onChangeText={value => setMyMessage(value)}
+        onChangeText={(value) => setMyMessage(value)}
       />
       <TouchableOpacity>
         <Text

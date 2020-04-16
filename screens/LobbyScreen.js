@@ -62,7 +62,8 @@ const LobbyScreen = ({ route, navigation }) => {
           onPress={() =>
             navigation.push('CreateRoom', {
               title,
-              lobbyId: id
+              lobbyId: id,
+              username
             })
           }
         >
