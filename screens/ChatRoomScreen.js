@@ -43,29 +43,38 @@ const ChatRoomScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <TextInput
-        style={styles.input}
-        placeholder="Send a message"
-        autoCorrect={false}
-        value={myMessage}
-        onSubmitEditing={submitChatMessage}
-        onChangeText={(value) => setMyMessage(value)}
-      />
-      <TouchableOpacity>
-        <Text
-          onPress={() => {
-            submitChatMessage;
-          }}
-        >
-          Send
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="Send a message"
+          autoCorrect={false}
+          value={myMessage}
+          onSubmitEditing={submitChatMessage}
+          onChangeText={(value) => setMyMessage(value)}
+        />
+        <TouchableOpacity style={styles.button}>
+          <Text
+            style={styles.send}
+            onPress={() => {
+              submitChatMessage;
+            }}
+          >
+            Send
+          </Text>
+        </TouchableOpacity>
+      </View>
       {chatMessages}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  inputWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center'
+  },
   input: {
     display: 'flex',
     alignItems: 'center',
@@ -73,6 +82,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingLeft: '2%',
     paddingRight: '2%',
+    width: '90%',
     top: 600,
     borderRadius: '20px'
   },
@@ -82,13 +92,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: '2%',
     paddingRight: '2%',
+    width: '10%',
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
     borderRadius: '20px',
     minWidth: '2%',
     color: 'white'
-  }
+  },
+  button: {
+    borderWidth: 2,
+    textAlign: 'center'
+  },
+  send: {}
 });
 
 export default ChatRoomScreen;
