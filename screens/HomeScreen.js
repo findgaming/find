@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
     password
   };
   function loginUser() {
-    fetch(`http://localhost:3000/users`, {
+    fetch(`http://localhost:3000/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -29,6 +29,7 @@ const HomeScreen = ({ navigation }) => {
       .catch((error) => {
         console.error(error);
       });
+      return true;
   }
   return (
     <View style={styles.container}>
@@ -38,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
+        onChangeText={(value) => setUsername(value)}
       />
       <TextInput
         style={styles.password}
@@ -45,12 +47,17 @@ const HomeScreen = ({ navigation }) => {
         autoCapitalize="none"
         secureTextEntry={true}
         autoCorrect={false}
+        onChangeText={(value) => setPassword(value)}
       />
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.login}>
           <Text
             style={styles.loginButton}
-            onPress={() => navigation.push('GameMenuScreen') || loginUser()}
+            onPress={() =>
+              loginUser()
+                ? navigation.push('GameMenuScreen')
+                : alert('Invalid Login!')
+            }
           >
             Login
           </Text>
