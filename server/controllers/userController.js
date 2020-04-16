@@ -16,36 +16,20 @@ userController.getUsers = (req, res, next) => {
     });
 };
 
-// userController.updateUserRoom = (req, res, next) => {
-//   const queryString = `SELECT * FROM Users`;
-
-//   db.query(queryString)
-//     .then(response => {
-//       res.locals.users = response.rows;
-//       return next();
-//     })
-//     .catch(err => {
-//       console.log('ERROR FROM GETTING USERS');
-//       return next(err);
-//     });
-// };
-
-userController.makeAdmin = (req, res, next) => {
-  const { id } = req.body;
+userController.updateRoom = (req, res, next) => {
+  const { room_id, id } = req.body;
   const queryString = `
-  UPDATE User 
-  SET 
-      admin = true
-  WHERE
-      id = ${id}`;
+  UPDATE Users 
+    SET room_id = ${room_id}
+    WHERE Users.id = ${id}`;
 
   db.query(queryString)
     .then((response) => {
-      res.locals.users = response.rows;
+      res.locals.user = response.rows[0];
       return next();
     })
     .catch((err) => {
-      console.log('ERROR FROM GETTING USERS');
+      console.log('ERROR FROM UPDATING ROOM_ID');
       return next(err);
     });
 };
@@ -62,6 +46,25 @@ userController.addUser = (req, res, next) => {
     .then((response) => {
       res.locals.users = response.rows;
       console.log('User added!');
+      return next();
+    })
+    .catch((err) => {
+      return next(err);
+    });
+};
+
+// add Users & password upon registration
+userController.returnUser = (req, res, next) => {
+  const { username, password } = req.query;
+
+  console.log(username, password);
+
+  const queryString = `SELECT * FROM Users WHERE Users.username = '${username}' AND Users.password = '${password}'`;
+
+  console.log(queryString);
+  db.query(queryString)
+    .then((response) => {
+      res.locals.user = response.rows[0];
       return next();
     })
     .catch((err) => {
