@@ -58,8 +58,8 @@ lobbyController.deleteLobby = (req, res, next) => {
 
 lobbyController.getAllRoomsFromLobby = (req, res, next) => {
   const id = req.params.id;
-
-  const queryString = `SELECT * FROM Rooms JOIN Lobbies on Rooms.lobby_id = Lobbies.id WHERE Lobbies.id = ${id};`;
+  // const queryString = `SELECT * FROM Rooms JOIN Lobbies on Rooms.lobby_id = Lobbies.id WHERE Lobbies.id = ${id};`;
+  const queryString = `select * from Rooms WHERE lobby_id = ${id}`;
 
   db.query(queryString)
     .then(response => {
