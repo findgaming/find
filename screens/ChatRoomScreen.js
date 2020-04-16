@@ -18,12 +18,10 @@ import { MonoText } from '../components/StyledText';
 const socket = io('http://localhost:3000');
 
 const ChatRoomScreen = ({ route, navigation }) => {
-  const { title } = route.params;
+  const { title, username } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
   let chatMessages;
-
-  // useEffect(() => {}, []);
 
   socket.on('chat message', (msg) => {
     setMessages(messages.concat(msg));

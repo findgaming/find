@@ -14,6 +14,7 @@ const HomeScreen = ({ navigation }) => {
     username,
     password
   };
+
   function loginUser() {
     fetch(`http://localhost:3000/users/login`, {
       method: 'POST',
@@ -25,12 +26,16 @@ const HomeScreen = ({ navigation }) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
+        if (result.username === username) {
+          navigation.push('GameMenuScreen', { username });
+        } else console.log('someting weird happened');
       })
       .catch((error) => {
         console.error(error);
+        alert('Invalid Login!');
       });
-    return true;
   }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Find!</Text>
@@ -53,11 +58,9 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.login}>
           <Text
             style={styles.loginButton}
-            onPress={() =>
-              loginUser()
-                ? navigation.push('GameMenuScreen')
-                : alert('Invalid Login!')
-            }
+            onPress={() => {
+              loginUser();
+            }}
           >
             Login
           </Text>
