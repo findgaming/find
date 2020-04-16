@@ -42,7 +42,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
   return (
     <View>
       <TextInput
-        // style={{ height: 40, borderWidth: 2, top: 600 }}
         style={styles.input}
         autoCorrect={false}
         value={myMessage}
@@ -56,14 +55,27 @@ const ChatRoomScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   input: {
+    display: 'flex',
+    alignItems: 'center',
     height: 40,
     borderWidth: 2,
-    top: 600
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    top: 600,
+    borderRadius: '20px'
   },
   chatMessage: {
-    borderWidth: 2,
+    display: 'flex',
+    flex: -1,
+    alignItems: 'center',
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    // borderWidth: 2,
     top: 500,
-    backgroundColor: 'blue',
+    minHeight: 40,
+    backgroundColor: '#3f77c4',
+    borderRadius: '20px',
+    minWidth: '2%',
     color: 'white'
   }
 });

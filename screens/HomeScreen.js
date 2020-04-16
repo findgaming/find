@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
+  const [user, setUser] = useState({});
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Find!</Text>
