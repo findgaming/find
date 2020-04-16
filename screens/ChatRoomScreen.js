@@ -8,29 +8,19 @@ import {
   TouchableOpacity,
   TextInput,
   View,
+<<<<<<< HEAD
   Linking,
   Button
+=======
+  Button,
+  Clipboard
+>>>>>>> staging
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import io from 'socket.io-client';
 
 import { MonoText } from '../components/StyledText';
-
-// const styles = StyleSheet.create({
-//   playButton: {
-//     alignSelf: 'center',
-//     flexWrap: 'nowrap',
-//     backgroundColor: '#3498DB',
-//     borderBottomColor: '#2980B9',
-//     borderBottomWidth: '5px',
-//     textAlign: 'center',
-//     borderRadius: '15px',
-//     paddingHorizontal: '20px',
-//     zIndex: '99',
-//     color: '#fff'
-//   }
-// });
 
 const socket = io('http://localhost:3000');
 
@@ -41,6 +31,11 @@ const PlayLink = () => (
         // textDecoration: 'none',
         backgroundColor: '#3498DB',
         paddingTop: 10,
+<<<<<<< HEAD
+=======
+        fontFamily: 'Arial',
+        fontStyle: 'bold',
+>>>>>>> staging
         paddingRight: 8,
         paddingLeft: 8,
         paddingBottom: 10,
@@ -49,10 +44,17 @@ const PlayLink = () => (
         borderRadius: 8,
         boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
         color: '#fff',
+<<<<<<< HEAD
         fontWeight: '900',
         marginTop: 10,
         marginBottom: 10,
         position: 'relative'
+=======
+        fontWeight: 900,
+        marginTop: 50,
+        marginBottom: 10,
+        width: 100
+>>>>>>> staging
       }}
       onPress={() => Linking.openURL('https://jackbox.tv/')}
     >
@@ -90,6 +92,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMyMessage('');
   }
 
+<<<<<<< HEAD
   // const releaseGameLink = () => {
   //   // alert('WORKED');
   //   // alert('WORKED2');
@@ -104,18 +107,67 @@ const ChatRoomScreen = ({ route, navigation }) => {
       return <PlayLink />;
     }
   };
+=======
+  console.log('this is play', play);
+>>>>>>> staging
   return (
     <View>
       <CountDown
+        style={{ marginBottom: 10 }}
         until={1}
         onFinish={() => {
-          // releaseGameLink();
           setPlay(true);
         }}
         onPress={() => alert('hello')}
         size={30}
       />
+<<<<<<< HEAD
       {playlinker()}
+=======
+      {play ? (
+        <center>
+          <View>
+            <PlayLink></PlayLink>
+          </View>
+          <center style={{ textAlign: 'center' }}>
+            <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
+              <View
+                style={{
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#008000',
+                    fontSize: 14,
+                    backgroundColor: '#00FF7F',
+                    fontFamily: 'Arial',
+                    fontWeight: 900,
+                    fontStyle: 'bold',
+                    textAlign: 'center',
+                    paddingTop: 10,
+                    paddingRight: 8,
+                    paddingLeft: 8,
+                    paddingBottom: 10,
+                    borderBottomWidth: 5,
+                    borderBottomColor: '#008000',
+                    boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: 120,
+                    borderRadius: 8
+                  }}
+                >
+                  SCFB
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </center>
+        </center>
+      ) : null}
+>>>>>>> staging
       <TextInput
         style={styles.input}
         placeholder="Send a message"
