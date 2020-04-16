@@ -37,7 +37,9 @@ const games = [
   }
 ];
 
-const GameMenuScreen = ({ navigation }) => {
+const GameMenuScreen = ({ route, navigation }) => {
+  const { username } = route.params;
+
   return (
     <View>
       <ScrollView>
@@ -49,7 +51,8 @@ const GameMenuScreen = ({ navigation }) => {
               onPress={() =>
                 navigation.push('LobbyScreen', {
                   title: item.title,
-                  id: item.id
+                  id: item.id,
+                  username
                 })
               }
             />

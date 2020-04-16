@@ -61,20 +61,22 @@ const PlayLink = () => (
 );
 
 const ChatRoomScreen = ({ route, navigation }) => {
-  const { title } = route.params;
+  const { title, username } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [play, setPlay] = useState(false);
   let chatMessages;
-
-  // create a return link to set to true
 
   socket.on('chat message', msg => {
     setMessages(messages.concat(msg));
   });
 
   chatMessages = messages.map(chatMessage => {
-    return <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>;
+    return (
+      <Text style={styles.chatMessage}>
+        {username}: {chatMessage}
+      </Text>
+    );
   });
 
   function submitChatMessage() {
@@ -105,17 +107,52 @@ const ChatRoomScreen = ({ route, navigation }) => {
         size={30}
       />
       {play ? <PlayLink></PlayLink> : null}
-
       <TextInput
-        style={{ height: 40, borderWidth: 2, top: 600 }}
+        style={styles.input}
+        placeholder="Send a message"
         autoCorrect={false}
         value={myMessage}
         onSubmitEditing={submitChatMessage}
         onChangeText={value => setMyMessage(value)}
       />
+      <TouchableOpacity>
+        <Text
+          onPress={() => {
+            submitChatMessage;
+          }}
+        >
+          Send
+        </Text>
+      </TouchableOpacity>
       {chatMessages}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 40,
+    borderWidth: 2,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    top: 600,
+    borderRadius: '20px'
+  },
+  chatMessage: {
+    display: 'flex',
+    flex: -1,
+    alignItems: 'center',
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    top: 500,
+    minHeight: 40,
+    backgroundColor: '#3f77c4',
+    borderRadius: '20px',
+    minWidth: '2%',
+    color: 'white'
+  }
+});
 
 export default ChatRoomScreen;

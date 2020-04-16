@@ -28,11 +28,9 @@ const styles = StyleSheet.create({
 });
 
 const LobbyScreen = ({ route, navigation }) => {
-  const { title, id } = route.params;
+  const { title, id, username } = route.params;
 
   const [fetchedLobbies, setFetchedLobbies] = useState([]);
-
-  // console.log('[id, title]: ', [id, title]);
 
   useEffect(() => {
     console.log('inside useEffect');
@@ -42,8 +40,8 @@ const LobbyScreen = ({ route, navigation }) => {
   async function getLobbies(id) {
     console.log('inside this function');
     await fetch(`http://localhost:3000/lobbies/${id}`)
-      .then(data => data.json())
-      .then(myJson => {
+      .then((data) => data.json())
+      .then((myJson) => {
         setFetchedLobbies(myJson);
       });
   }
@@ -79,7 +77,10 @@ const LobbyScreen = ({ route, navigation }) => {
                   key={i}
                   title={elem.name}
                   onPress={() =>
-                    navigation.push('ChatRoomScreen', { title: elem.name })
+                    navigation.push('ChatRoomScreen', {
+                      title: elem.name,
+                      username
+                    })
                   }
                   chevron
                 />
