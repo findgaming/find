@@ -5,13 +5,12 @@ lobbyController.getLobbies = (req, res, next) => {
   const queryString = `SELECT * FROM Lobbies`;
 
   db.query(queryString)
-    .then((response) => {
-      console.log('hello');
+    .then(response => {
       res.locals.lobbies = response.rows;
       return next();
     })
-    .catch((err) => {
-      next(err);
+    .catch(err => {
+      return next(err);
     });
 };
 
@@ -24,12 +23,12 @@ lobbyController.addLobby = (req, res, next) => {
   const values = [name, min_players, max_players];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       // console.log('response', response);
       res.locals.newLobby = response.rows[0];
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
@@ -44,12 +43,12 @@ lobbyController.deleteLobby = (req, res, next) => {
   const values = [id];
 
   db.query(queryString, values)
-    .then((response) => {
+    .then(response => {
       res.locals.deleted = response.rows[0];
       console.log(response.rows[0]);
       next();
     })
-    .catch((err) => {
+    .catch(err => {
       next(err);
     });
 };
@@ -59,8 +58,8 @@ lobbyController.deleteLobby = (req, res, next) => {
 
 lobbyController.getAllRoomsFromLobby = (req, res, next) => {
   const id = req.params.id;
-
-  const queryString = `SELECT * FROM Rooms JOIN Lobbies on Rooms.lobby_id = Lobbies.id WHERE Lobbies.id = ${id};`;
+  // const queryString = `SELECT * FROM Rooms JOIN Lobbies on Rooms.lobby_id = Lobbies.id WHERE Lobbies.id = ${id};`;
+  const queryString = `select * from Rooms WHERE lobby_id = ${id}`;
 
   db.query(queryString)
     .then(response => {
