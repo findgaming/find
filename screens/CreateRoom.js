@@ -7,6 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+// create room and set it to DATABASE
 const CreateRoom = () => {
   return (
     <View style={styles.container}>
