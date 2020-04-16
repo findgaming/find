@@ -30,7 +30,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
   });
 
   chatMessages = messages.map((chatMessage) => {
-    return <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>;
+    return <Text style={styles.chatMessage}>{chatMessage}</Text>;
   });
 
   function submitChatMessage() {
@@ -42,7 +42,8 @@ const ChatRoomScreen = ({ route, navigation }) => {
   return (
     <View>
       <TextInput
-        style={{ height: 40, borderWidth: 2, top: 600 }}
+        // style={{ height: 40, borderWidth: 2, top: 600 }}
+        style={styles.input}
         autoCorrect={false}
         value={myMessage}
         onSubmitEditing={submitChatMessage}
@@ -52,5 +53,19 @@ const ChatRoomScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderWidth: 2,
+    top: 600
+  },
+  chatMessage: {
+    borderWidth: 2,
+    top: 500,
+    backgroundColor: 'blue',
+    color: 'white'
+  }
+});
 
 export default ChatRoomScreen;
