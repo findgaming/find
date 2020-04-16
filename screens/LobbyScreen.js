@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   Platform,
@@ -14,9 +14,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const LobbyScreen = ({ route, navigation }) => {
   const { title, id } = route.params;
+  const [fetchedLobbies, setFetchedLobbies] = useState([]);
 
   console.log('[id, title]: ', [id, title]);
-  let fetchedLobbies;
+
+  useEffect(() => {
+    console.log('inside useEffect');
+    getLobbies(id);
+  }, []);
 
   async function getLobbies(id) {
     console.log('inside this function');
@@ -24,16 +29,10 @@ const LobbyScreen = ({ route, navigation }) => {
       .then((data) => data.json())
       .then((myJson) => {
         console.log('fetched data');
-        fetchedLobbies = myJson;
+        setFetchedLobbies(myJson);
         console.log(myJson);
       });
   }
-
-  React.useEffect(() => {
-    getLobbies(id);
-  });
-
-  // getLobbies(id);
 
   const lobbies = [
     "Eliot's lobby",
@@ -50,9 +49,9 @@ const LobbyScreen = ({ route, navigation }) => {
               return (
                 <ListItem
                   key={i}
-                  title={elem}
+                  title={elem.name}
                   onPress={() =>
-                    navigation.push('ChatRoomScreen', { title: elem })
+                    navigation.push('ChatRoomScreen', { title: elem.name })
                   }
                   chevron
                 />
