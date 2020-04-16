@@ -10,7 +10,7 @@ lobbyController.getLobbies = (req, res, next) => {
       return next();
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 };
 
