@@ -1,3 +1,4 @@
+import CountDown from 'react-native-countdown-component';
 import React, { useState, useEffect } from 'react';
 import {
   Image,
@@ -17,10 +18,38 @@ import { MonoText } from '../components/StyledText';
 
 const socket = io('http://localhost:3000');
 
+const PlayLink = () => (
+  <center>
+    <a
+      style={{
+        textDecoration: 'none',
+        backgroundColor: '#3498DB',
+        paddingTop: '10px',
+        paddingRight: '8px',
+        paddingLeft: '8px',
+        paddingBottom: '10px',
+        borderBottomWidth: '5px',
+        borderBottomColor: '#2980B9',
+        borderRadius: '8px',
+        boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+        color: '#fff',
+        fontWeight: '900',
+        marginTop: '10px',
+        marginBottom: '10px',
+        position: 'relative'
+      }}
+      href="https://jackbox.tv/"
+    >
+      PLAY NOW
+    </a>
+  </center>
+);
+
 const ChatRoomScreen = ({ route, navigation }) => {
   const { title, username } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [play, setPlay] = useState(false);
   let chatMessages;
 
   socket.on('chat message', (msg) => {
@@ -30,19 +59,32 @@ const ChatRoomScreen = ({ route, navigation }) => {
   chatMessages = messages.map((chatMessage) => {
     return (
       <Text style={styles.chatMessage}>
-        {username}: {chatMessage}
+        {chatMessage.username}: {chatMessage.message}
       </Text>
     );
   });
 
   function submitChatMessage() {
-    socket.emit('chat message', myMessage);
+    const messageObj = {
+      username: username,
+      message: myMessage
+    };
+    socket.emit('chat message', messageObj);
     console.log(myMessage);
     setMyMessage('');
   }
 
   return (
     <View>
+      <CountDown
+        until={1}
+        onFinish={() => {
+          setPlay(true);
+        }}
+        onPress={() => alert('hello')}
+        size={30}
+      />
+      {play ? <PlayLink></PlayLink> : null}
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
@@ -63,7 +105,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      {chatMessages}
     </View>
   );
 };
@@ -92,7 +133,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: '2%',
     paddingRight: '2%',
-    width: '10%',
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
@@ -101,10 +141,19 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   button: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 2,
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'green',
+    width: '10%',
+    height: 40,
+    borderRadius: '20px'
   },
-  send: {}
+  send: {
+    color: 'white'
+  }
 });
 
 export default ChatRoomScreen;

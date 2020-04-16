@@ -22,11 +22,11 @@ const RegisterScreen = ({ navigation }) => {
       },
       body: JSON.stringify(objToSend)
     })
-      .then((response) => response.json())
-      .then((result) => {
+      .then(response => response.json())
+      .then(result => {
         console.log(result);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
       });
   }
@@ -39,7 +39,7 @@ const RegisterScreen = ({ navigation }) => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(value) => setUsername(value)}
+        onChangeText={value => setUsername(value)}
       />
       <TextInput
         style={styles.password}
@@ -47,12 +47,14 @@ const RegisterScreen = ({ navigation }) => {
         autoCapitalize="none"
         secureTextEntry={true}
         autoCorrect={false}
-        onChangeText={(value) => setPassword(value)}
+        onChangeText={value => setPassword(value)}
       />
       <TouchableOpacity style={styles.signup}>
         <Text
           style={styles.signupButton}
-          onPress={() => navigation.push('GameMenuScreen') || addUser()}
+          onPress={() =>
+            navigation.push('GameMenuScreen', { username }) || addUser()
+          }
         >
           Sign up
         </Text>

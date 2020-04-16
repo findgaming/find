@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 
 // create room and set it to DATABASE
-const CreateRoom = ({ route }) => {
+const CreateRoom = ({ route, navigation }) => {
   const admin = 1;
-  const { lobbyId } = route.params;
+  const { title, lobbyId } = route.params;
   const [roomName, setRoomName] = useState('');
   const [players, setPlayers] = useState(0);
   const [start, setStart] = useState('12:00:00');
@@ -83,6 +83,10 @@ const CreateRoom = ({ route }) => {
         <Text
           onPress={() => {
             submitNewRoom();
+            navigation.push('LobbyScreen', {
+              title,
+              id: lobbyId
+            });
           }}
           style={styles.createText}
         >
