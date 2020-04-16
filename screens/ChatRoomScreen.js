@@ -109,7 +109,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
             Send
           </Text>
         </TouchableOpacity>
-        {chatMessages}
       </View>
     </View>
   );

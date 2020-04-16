@@ -23,14 +23,14 @@ const HomeScreen = ({ navigation }) => {
       },
       body: JSON.stringify(objToSend)
     })
-      .then((response) => response.json())
-      .then((result) => {
+      .then(response => response.json())
+      .then(result => {
         console.log(result);
         if (result.username === username) {
           navigation.push('GameMenuScreen', { username });
         } else console.log('someting weird happened');
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
         alert('Invalid Login!');
       });
@@ -44,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(value) => setUsername(value)}
+        onChangeText={value => setUsername(value)}
       />
       <TextInput
         style={styles.password}
@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
         autoCapitalize="none"
         secureTextEntry={true}
         autoCorrect={false}
-        onChangeText={(value) => setPassword(value)}
+        onChangeText={value => setPassword(value)}
       />
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.login}>
