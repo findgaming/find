@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   View,
+  Linking,
   Button
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -34,30 +35,30 @@ import { MonoText } from '../components/StyledText';
 const socket = io('http://localhost:3000');
 
 const PlayLink = () => (
-  <center>
-    <a
+  <View>
+    <Text
       style={{
-        textDecoration: 'none',
+        // textDecoration: 'none',
         backgroundColor: '#3498DB',
-        paddingTop: '10px',
-        paddingRight: '8px',
-        paddingLeft: '8px',
-        paddingBottom: '10px',
-        borderBottomWidth: '5px',
+        paddingTop: 10,
+        paddingRight: 8,
+        paddingLeft: 8,
+        paddingBottom: 10,
+        borderBottomWidth: 5,
         borderBottomColor: '#2980B9',
-        borderRadius: '8px',
+        borderRadius: 8,
         boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
         color: '#fff',
         fontWeight: '900',
-        marginTop: '10px',
-        marginBottom: '10px',
+        marginTop: 10,
+        marginBottom: 10,
         position: 'relative'
       }}
-      href="https://jackbox.tv/"
+      onPress={() => Linking.openURL('https://jackbox.tv/')}
     >
       PLAY NOW
-    </a>
-  </center>
+    </Text>
+  </View>
 );
 
 const ChatRoomScreen = ({ route, navigation }) => {
@@ -71,9 +72,9 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMessages(messages.concat(msg));
   });
 
-  chatMessages = messages.map((chatMessage) => {
+  chatMessages = messages.map((chatMessage, i) => {
     return (
-      <Text style={styles.chatMessage}>
+      <Text key={i} style={styles.chatMessage}>
         {chatMessage.username}: {chatMessage.message}
       </Text>
     );
@@ -98,7 +99,11 @@ const ChatRoomScreen = ({ route, navigation }) => {
   // };
 
   // returnLink ? console.log('this is returnlink', returnLink) : null;
-  console.log('this is play', play);
+  const playlinker = () => {
+    if (play) {
+      return <PlayLink />;
+    }
+  };
   return (
     <View>
       <CountDown
@@ -110,7 +115,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
         onPress={() => alert('hello')}
         size={30}
       />
-      {play ? <PlayLink></PlayLink> : null}
+      {playlinker()}
       <TextInput
         style={styles.input}
         placeholder="Send a message"
@@ -124,11 +129,10 @@ const ChatRoomScreen = ({ route, navigation }) => {
           onPress={() => {
             submitChatMessage;
           }}
-        >
-          Send
-        </Text>
+          value="SEND"
+        ></Text>
       </TouchableOpacity>
-      {chatMessages}
+      <View>{chatMessages}</View>
     </View>
   );
 };
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     paddingRight: '2%',
     top: 600,
-    borderRadius: '20px'
+    borderRadius: 20
   },
   chatMessage: {
     display: 'flex',
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
-    borderRadius: '20px',
+    borderRadius: 20,
     minWidth: '2%',
     color: 'white'
   }
