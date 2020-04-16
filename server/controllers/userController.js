@@ -55,7 +55,7 @@ userController.addUser = (req, res, next) => {
 
 // add Users & password upon registration
 userController.returnUser = (req, res, next) => {
-  const { username, password } = req.query;
+  const { username, password } = req.body;
 
   console.log(username, password);
 
