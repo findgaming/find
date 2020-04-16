@@ -25,21 +25,21 @@ const PlayLink = () => (
       style={{
         textDecoration: 'none',
         backgroundColor: '#3498DB',
-        paddingTop: '10px',
+        paddingTop: 10,
         fontFamily: 'Arial',
         fontStyle: 'bold',
-        paddingRight: '8px',
-        paddingLeft: '8px',
-        paddingBottom: '10px',
-        borderBottomWidth: '5px',
+        paddingRight: 8,
+        paddingLeft: 8,
+        paddingBottom: 10,
+        borderBottomWidth: 5,
         borderBottomColor: '#2980B9',
-        borderRadius: '8px',
+        borderRadius: 8,
         boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
         color: '#fff',
-        fontWeight: '900',
-        marginTop: '50px',
-        marginBottom: '10px',
-        width: '100vw'
+        fontWeight: 900,
+        marginTop: 50,
+        marginBottom: 10,
+        width: 100
       }}
       href="https://jackbox.tv/"
     >
@@ -77,7 +77,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
   return (
     <View>
       <CountDown
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: 10 }}
         until={1}
         onFinish={() => {
           setPlay(true);
@@ -87,7 +87,9 @@ const ChatRoomScreen = ({ route, navigation }) => {
       />
       {play ? (
         <center>
-          <PlayLink></PlayLink>
+          <View>
+            <PlayLink></PlayLink>
+          </View>
           <center style={{ textAlign: 'center' }}>
             <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
               <View
@@ -103,20 +105,20 @@ const ChatRoomScreen = ({ route, navigation }) => {
                     fontSize: 14,
                     backgroundColor: '#00FF7F',
                     fontFamily: 'Arial',
-                    fontWeight: '900',
+                    fontWeight: 900,
                     fontStyle: 'bold',
                     textAlign: 'center',
-                    paddingTop: '10px',
-                    paddingRight: '8px',
-                    paddingLeft: '8px',
-                    paddingBottom: '10px',
-                    borderBottomWidth: '5px',
+                    paddingTop: 10,
+                    paddingRight: 8,
+                    paddingLeft: 8,
+                    paddingBottom: 10,
+                    borderBottomWidth: 5,
                     borderBottomColor: '#008000',
                     boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
-                    marginTop: '10px',
-                    marginBottom: '10px',
-                    width: '20%',
-                    borderRadius: '8px'
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: 120,
+                    borderRadius: 8
                   }}
                 >
                   SCFB
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     paddingRight: '2%',
     top: 600,
-    borderRadius: '20px'
+    borderRadius: 20
   },
   chatMessage: {
     display: 'flex',
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
-    borderRadius: '20px',
+    borderRadius: 20,
     minWidth: '2%',
     color: 'white'
   }
