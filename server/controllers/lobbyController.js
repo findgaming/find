@@ -6,12 +6,11 @@ lobbyController.getLobbies = (req, res, next) => {
 
   db.query(queryString)
     .then(response => {
-      // console.log('coming from get lobbies', response.rows);
       res.locals.lobbies = response.rows;
       return next();
     })
     .catch(err => {
-      return next(err);
+      next(err);
     });
 };
 
