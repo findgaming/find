@@ -20,7 +20,7 @@ router.delete('/:id', userController.deleteUser, (req, res) => {
   res.status(200).json(res.locals.deleted);
 });
 
-router.get('/login', userController.returnUser, (req, res) => {
+router.post('/login', userController.returnUser, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
