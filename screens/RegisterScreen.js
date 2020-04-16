@@ -19,7 +19,6 @@ const RegisterScreen = () => {
         placeholder="Username"
         autoCapitalize="none"
         autoCorrect={false}
-
       />
       <TextInput
         style={styles.password}
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
   contract: {
     textAlign: 'center',
     fontSize: 15,
-    fontFamily: 'Arial',
+    fontFamily: 'Arial'
   }
 });
 
