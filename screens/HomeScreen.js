@@ -13,24 +13,32 @@ const HomeScreen = ({ navigation }) => {
       <Text style={styles.title}>Find!</Text>
       <TextInput
         style={styles.username}
-        placeholder="username"
+        placeholder="Username"
         autoCapitalize="none"
+        autoCorrect={false}
       />
       <TextInput
         style={styles.password}
-        placeholder="password"
+        placeholder="Password"
         autoCapitalize="none"
+        secureTextEntry={true}
+        autoCorrect={false}
       />
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.login}>
-          <Text style={styles.loginButton}>Login</Text>
+          <Text
+            style={styles.loginButton}
+            onPress={() => navigation.push('GameMenuScreen')}
+          >
+            Login
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text
             style={styles.registerButton}
             onPress={() => navigation.push('RegisterScreen')}
           >
-            Register
+            Sign up for Find!
           </Text>
         </TouchableOpacity>
       </View>
@@ -42,54 +50,56 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fffff0'
   },
   title: {
     color: '#1e73be',
     fontSize: 45,
     fontFamily: 'Arial',
-    fontWeight: '600'
+    fontWeight: '600',
+    marginBottom: 20
   },
   username: {
     height: 40,
-    width: 120,
+    width: 350,
     borderColor: 'gray',
-    borderWidth: 1,
+    borderWidth: 0.5,
     textAlign: 'center',
     opacity: 1,
-    borderRadius: 10,
-    margin: 20
+    borderRadius: 5,
+    fontSize: 17.5
   },
   password: {
     height: 40,
-    width: 120,
+    width: 350,
     borderColor: 'gray',
-    borderWidth: 1,
+    borderWidth: 0.5,
     textAlign: 'center',
     opacity: 1,
-    borderRadius: 10,
-    margin: -10
+    borderRadius: 5,
+    fontSize: 17.5
   },
   buttons: {
     margin: 20,
-    flexDirection: 'row',
     alignItems: 'center'
   },
-  login: {
-    margin: 20
-  },
+
   loginButton: {
     fontSize: 30,
     fontFamily: 'Arial',
     color: '#1e73be',
-    textDecorationLine: 'underline',
-    fontWeight: '500'
+    fontWeight: '500',
+    borderWidth: 0.25,
+    width: 350,
+    textAlign: 'center',
+    marginBottom: 150,
+    backgroundColor: '#fffaf0'
   },
   registerButton: {
-    fontSize: 30,
+    fontSize: 15,
     fontFamily: 'Arial',
     color: '#1e73be',
-    textDecorationLine: 'underline',
     fontWeight: '500'
   }
 });

@@ -30,7 +30,7 @@ lobbyController.addLobby = (req, res, next) => {
       return next();
     })
     .catch(err => {
-      return next(err);
+      next(err);
     });
 };
 
