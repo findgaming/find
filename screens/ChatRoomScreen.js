@@ -57,8 +57,13 @@ const ChatRoomScreen = ({ route, navigation }) => {
   });
 
   chatMessages = messages.map((chatMessage) => {
+    const messageStyle =
+      chatMessage.username === username
+        ? styles.userMessage
+        : styles.otherMessage;
+
     return (
-      <Text style={styles.chatMessage}>
+      <Text style={messageStyle}>
         {chatMessage.username}: {chatMessage.message}
       </Text>
     );
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     top: 600,
     borderRadius: '20px'
   },
-  chatMessage: {
+  userMessage: {
     display: 'flex',
     flex: -1,
     alignItems: 'center',
@@ -136,6 +141,19 @@ const styles = StyleSheet.create({
     top: 500,
     minHeight: 40,
     backgroundColor: '#3f77c4',
+    borderRadius: '20px',
+    minWidth: '2%',
+    color: 'white'
+  },
+  otherMessage: {
+    display: 'flex',
+    flex: -1,
+    alignItems: 'center',
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    top: 500,
+    minHeight: 40,
+    backgroundColor: 'lightGrey',
     borderRadius: '20px',
     minWidth: '2%',
     color: 'white'
