@@ -15,26 +15,29 @@ import io from 'socket.io-client';
 
 import { MonoText } from '../components/StyledText';
 
+const socket = io('http://localhost:3000');
+
 const ChatRoomScreen = ({ route, navigation }) => {
   const { title } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState({});
+  let chatMessages;
 
   useEffect(() => {
-    setSocket(io('http://127.0.0.1:3000'));
-    socket.on('string param should match what backend emits');
+    // console.log('here is the object: ', sock);
     socket.on('chat message', (msg) => {
+      console.log('inside socket.on useEffect: ', msg);
       setMessages(messages.push(msg));
+      console.log('postsetmessages: ', messages);
     });
+
+    chatMessages = messages.map((chatMessage) => (
+      <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>
+    ));
   }, []);
 
-  const chatMessages = messages.map((chatMessage) => (
-    <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>
-  ));
-
   function submitChatMessage() {
-    // socket.emit('chat message', myMessage);
+    socket.emit('chat message', myMessage);
     console.log(myMessage);
     setMyMessage('');
   }
