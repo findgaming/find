@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   View,
-  Button
+  Button,
+  Clipboard
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -40,6 +41,8 @@ const PlayLink = () => (
         textDecoration: 'none',
         backgroundColor: '#3498DB',
         paddingTop: '10px',
+        fontFamily: 'Arial',
+        fontStyle: 'bold',
         paddingRight: '8px',
         paddingLeft: '8px',
         paddingBottom: '10px',
@@ -51,7 +54,7 @@ const PlayLink = () => (
         fontWeight: '900',
         marginTop: '10px',
         marginBottom: '10px',
-        position: 'relative'
+        width: '100vw'
       }}
       href="https://jackbox.tv/"
     >
@@ -85,28 +88,63 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMyMessage('');
   }
 
-  // const releaseGameLink = () => {
-  //   // alert('WORKED');
-  //   // alert('WORKED2');
-  //   let returnLink = 'booogie';
-  //   console.log('return element');
-  //   return returnLink;
-  // };
-
-  // returnLink ? console.log('this is returnlink', returnLink) : null;
   console.log('this is play', play);
   return (
     <View>
       <CountDown
         until={1}
         onFinish={() => {
-          // releaseGameLink();
           setPlay(true);
         }}
         onPress={() => alert('hello')}
         size={30}
       />
-      {play ? <PlayLink></PlayLink> : null}
+      {play ? (
+        <div>
+          <PlayLink></PlayLink>
+          <center>
+            <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
+              <View>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 14,
+                    backgroundColor: '#00FF7F',
+                    fontFamily: 'Arial',
+                    fontStyle: 'bold',
+                    textAlign: 'center',
+                    paddingTop: '10px',
+                    paddingRight: '8px',
+                    paddingLeft: '8px',
+                    paddingBottom: '10px',
+                    borderBottomWidth: '5px',
+                    borderBottomColor: '#008000',
+                    boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+                    marginTop: '10px',
+                    marginBottom: '10px'
+                  }}
+                >
+                  SCFB
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </center>
+        </div>
+      ) : null}
+      {/* textDecoration: 'none',
+        backgroundColor: '#3498DB',
+        paddingTop: '10px',
+        paddingRight: '8px',
+        paddingLeft: '8px',
+        paddingBottom: '10px',
+        borderBottomWidth: '5px',
+        borderBottomColor: '#2980B9',
+        borderRadius: '8px',
+        boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+        color: '#fff',
+        fontWeight: '900',
+        marginTop: '10px',
+        marginBottom: '10px' */}
       <TextInput
         style={styles.input}
         placeholder="Send a message"
