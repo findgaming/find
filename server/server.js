@@ -30,7 +30,7 @@ app.use('/rooms', roomRouter);
 io.on('connection', (socket) => {
   console.log('a user has connected');
   socket.on('chat message', (msg) => {
-    console.log(msg);
+    console.log('[msg, stringifiedmsg]: ', [msg, JSON.stringify(msg)]);
     io.emit('chat message', msg);
   });
 
