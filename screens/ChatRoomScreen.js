@@ -49,7 +49,7 @@ const PlayLink = () => (
 );
 
 const ChatRoomScreen = ({ route, navigation }) => {
-  const { title, username } = route.params;
+  const { title, username, timer } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [play, setPlay] = useState(false);
@@ -78,7 +78,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
     <View>
       <CountDown
         style={{ marginBottom: 10 }}
-        until={1}
+        until={timer}
         onFinish={() => {
           setPlay(true);
         }}
