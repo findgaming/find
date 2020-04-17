@@ -8,13 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   View,
-<<<<<<< HEAD
-  Linking,
-  Button
-=======
   Button,
   Clipboard
->>>>>>> staging
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -25,17 +20,14 @@ import { MonoText } from '../components/StyledText';
 const socket = io('http://localhost:3000');
 
 const PlayLink = () => (
-  <View>
-    <Text
+  <center>
+    <a
       style={{
-        // textDecoration: 'none',
+        textDecoration: 'none',
         backgroundColor: '#3498DB',
         paddingTop: 10,
-<<<<<<< HEAD
-=======
         fontFamily: 'Arial',
         fontStyle: 'bold',
->>>>>>> staging
         paddingRight: 8,
         paddingLeft: 8,
         paddingBottom: 10,
@@ -44,23 +36,16 @@ const PlayLink = () => (
         borderRadius: 8,
         boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
         color: '#fff',
-<<<<<<< HEAD
-        fontWeight: '900',
-        marginTop: 10,
-        marginBottom: 10,
-        position: 'relative'
-=======
         fontWeight: 900,
         marginTop: 50,
         marginBottom: 10,
         width: 100
->>>>>>> staging
       }}
-      onPress={() => Linking.openURL('https://jackbox.tv/')}
+      href="https://jackbox.tv/"
     >
       PLAY NOW
-    </Text>
-  </View>
+    </a>
+  </center>
 );
 
 const ChatRoomScreen = ({ route, navigation }) => {
@@ -74,9 +59,9 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMessages(messages.concat(msg));
   });
 
-  chatMessages = messages.map((chatMessage, i) => {
+  chatMessages = messages.map((chatMessage) => {
     return (
-      <Text key={i} style={styles.chatMessage}>
+      <Text style={styles.chatMessage}>
         {chatMessage.username}: {chatMessage.message}
       </Text>
     );
@@ -92,24 +77,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMyMessage('');
   }
 
-<<<<<<< HEAD
-  // const releaseGameLink = () => {
-  //   // alert('WORKED');
-  //   // alert('WORKED2');
-  //   let returnLink = 'booogie';
-  //   console.log('return element');
-  //   return returnLink;
-  // };
-
-  // returnLink ? console.log('this is returnlink', returnLink) : null;
-  const playlinker = () => {
-    if (play) {
-      return <PlayLink />;
-    }
-  };
-=======
   console.log('this is play', play);
->>>>>>> staging
   return (
     <View>
       <CountDown
@@ -121,9 +89,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
         onPress={() => alert('hello')}
         size={30}
       />
-<<<<<<< HEAD
-      {playlinker()}
-=======
       {play ? (
         <center>
           <View>
@@ -167,7 +132,6 @@ const ChatRoomScreen = ({ route, navigation }) => {
           </center>
         </center>
       ) : null}
->>>>>>> staging
       <TextInput
         style={styles.input}
         placeholder="Send a message"
@@ -181,10 +145,11 @@ const ChatRoomScreen = ({ route, navigation }) => {
           onPress={() => {
             submitChatMessage;
           }}
-          value="SEND"
-        ></Text>
+        >
+          Send
+        </Text>
       </TouchableOpacity>
-      <View>{chatMessages}</View>
+      {chatMessages}
     </View>
   );
 };
