@@ -22,10 +22,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 15,
     paddingHorizontal: 20,
-<<<<<<< HEAD
-=======
-    zIndex: 99,
->>>>>>> 6bbe309b85e868aa4de5d37fa56b0f515e9a2b5b
     color: '#fff'
   }
 });
