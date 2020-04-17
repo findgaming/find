@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     backgroundColor: '#3498DB',
     borderBottomColor: '#2980B9',
-    borderBottomWidth: '5px',
+    borderBottomWidth: 5,
     textAlign: 'center',
-    borderRadius: '15px',
-    paddingHorizontal: '20px',
-    zIndex: '99',
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    zIndex: 99,
     color: '#fff'
   }
 });
