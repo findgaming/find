@@ -79,9 +79,48 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMyMessage('');
   }
 
+  const renderPlayArea = () => {
+    play ? (
+      <View style={styles.playButtonWrapper}>
+        <View>
+          <PlayLink></PlayLink>
+        </View>
+        <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
+          <View style={styles.textView}>
+            <Text
+              style={{
+                color: '#008000',
+                fontSize: 14,
+                backgroundColor: '#00FF7F',
+                fontFamily: 'Arial',
+                fontWeight: 900,
+                fontStyle: 'bold',
+                textAlign: 'center',
+                paddingTop: 10,
+                paddingRight: 8,
+                paddingLeft: 8,
+                paddingBottom: 10,
+                borderBottomWidth: 5,
+                borderBottomColor: '#008000',
+                boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+                marginTop: 10,
+                marginBottom: 10,
+                width: 120,
+                borderRadius: 8
+              }}
+            >
+              SCFB
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    ) : null;
+  };
+
   return (
     <View>
       <CountDown
+        style={{ marginBottom: 10 }}
         until={1}
         onFinish={() => {
           setPlay(true);
@@ -89,7 +128,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
         onPress={() => alert('hello')}
         size={30}
       />
-      {play ? <PlayLink></PlayLink> : null}
+      {renderPlayArea()}
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
@@ -110,11 +149,21 @@ const ChatRoomScreen = ({ route, navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {chatMessages}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  playButtonWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  textView: {
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center'
+  },
   inputWrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -134,7 +183,7 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     display: 'flex',
-    flex: -1,
+    flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: '2%',
     paddingRight: '2%',
@@ -147,13 +196,14 @@ const styles = StyleSheet.create({
   },
   otherMessage: {
     display: 'flex',
+    flexDirection: 'row',
     flex: -1,
     alignItems: 'center',
     paddingLeft: '2%',
     paddingRight: '2%',
     top: 500,
     minHeight: 40,
-    backgroundColor: 'lightGrey',
+    backgroundColor: 'purple',
     borderRadius: '20px',
     minWidth: '2%',
     color: 'white'
