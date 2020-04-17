@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 15,
     paddingHorizontal: 20,
-    zIndex: 99,
     color: '#fff'
   }
 });
@@ -40,8 +39,8 @@ const LobbyScreen = ({ route, navigation }) => {
   async function getLobbies(id) {
     console.log('inside this function');
     await fetch(`http://localhost:3000/lobbies/${id}`)
-      .then((data) => data.json())
-      .then((myJson) => {
+      .then(data => data.json())
+      .then(myJson => {
         setFetchedLobbies(myJson);
       });
   }
@@ -79,6 +78,7 @@ const LobbyScreen = ({ route, navigation }) => {
                   title={elem.name}
                   onPress={() =>
                     navigation.push('ChatRoomScreen', {
+                      timer: elem.timer,
                       title: elem.name,
                       username
                     })

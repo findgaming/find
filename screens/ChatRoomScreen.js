@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   View,
-  Button
+  Button,
+  Clipboard
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -46,17 +47,17 @@ const PlayLink = () => (
 );
 
 const ChatRoomScreen = ({ route, navigation }) => {
-  const { title, username } = route.params;
+  const { title, username, timer } = route.params;
   const [myMessage, setMyMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [play, setPlay] = useState(false);
   let chatMessages;
 
-  socket.on('chat message', (msg) => {
+  socket.on('chat message', msg => {
     setMessages(messages.concat(msg));
   });
 
-  chatMessages = messages.map((chatMessage) => {
+  chatMessages = messages.map(chatMessage => {
     const messageStyle =
       chatMessage.username === username
         ? styles.userMessage
@@ -79,56 +80,89 @@ const ChatRoomScreen = ({ route, navigation }) => {
     setMyMessage('');
   }
 
-  const renderPlayArea = () => {
-    play ? (
-      <View style={styles.playButtonWrapper}>
-        <View>
-          <PlayLink></PlayLink>
-        </View>
-        <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
-          <View style={styles.textView}>
-            <Text
-              style={{
-                color: '#008000',
-                fontSize: 14,
-                backgroundColor: '#00FF7F',
-                fontFamily: 'Arial',
-                fontWeight: 900,
-                fontStyle: 'bold',
-                textAlign: 'center',
-                paddingTop: 10,
-                paddingRight: 8,
-                paddingLeft: 8,
-                paddingBottom: 10,
-                borderBottomWidth: 5,
-                borderBottomColor: '#008000',
-                boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
-                marginTop: 10,
-                marginBottom: 10,
-                width: 120,
-                borderRadius: 8
-              }}
-            >
-              SCFB
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    ) : null;
-  };
-
+  // const renderPlayArea = () => {
+  //   play ? (
+  //     <View style={styles.playButtonWrapper}>
+  //       <View>
+  //         <PlayLink></PlayLink>
+  //       </View>
+  //       <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
+  //         <View style={styles.textView}>
+  //           <Text
+  //             style={{
+  //               color: '#008000',
+  //               fontSize: 14,
+  //               backgroundColor: '#00FF7F',
+  //               fontFamily: 'Arial',
+  //               fontWeight: 900,
+  //               fontStyle: 'bold',
+  //               textAlign: 'center',
+  //               paddingTop: 10,
+  //               paddingRight: 8,
+  //               paddingLeft: 8,
+  //               paddingBottom: 10,
+  //               borderBottomWidth: 5,
+  //               borderBottomColor: '#008000',
+  //               boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+  //               marginTop: 10,
+  //               marginBottom: 10,
+  //               width: 120,
+  //               borderRadius: 8
+  //             }}
+  //           >
+  //             SCFB
+  //           </Text>
+  //         </View>
+  //       </TouchableOpacity>
+  //     </View>
+  //   ) : null;
+  // };
   return (
     <View>
       <CountDown
         style={{ marginBottom: 10 }}
-        until={1}
+        until={timer}
         onFinish={() => {
           setPlay(true);
         }}
         onPress={() => alert('hello')}
         size={30}
       />
-      {renderPlayArea()}
+      {play ? (
+        <View style={styles.playButtonWrapper}>
+          <View>
+            <PlayLink></PlayLink>
+          </View>
+          <TouchableOpacity onPress={() => Clipboard.setString('SCFB')}>
+            <View style={styles.textView}>
+              <Text
+                style={{
+                  color: '#008000',
+                  fontSize: 14,
+                  backgroundColor: '#00FF7F',
+                  fontFamily: 'Arial',
+                  fontWeight: 900,
+                  fontStyle: 'bold',
+                  textAlign: 'center',
+                  paddingTop: 10,
+                  paddingRight: 8,
+                  paddingLeft: 8,
+                  paddingBottom: 10,
+                  borderBottomWidth: 5,
+                  borderBottomColor: '#008000',
+                  boxShadow: '5px 7px 3px 0px rgba(0,0,0,0.75)',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  width: 120,
+                  borderRadius: 8
+                }}
+              >
+                SCFB
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
@@ -136,7 +170,7 @@ const ChatRoomScreen = ({ route, navigation }) => {
           autoCorrect={false}
           value={myMessage}
           onSubmitEditing={submitChatMessage}
-          onChangeText={(value) => setMyMessage(value)}
+          onChangeText={value => setMyMessage(value)}
         />
         <TouchableOpacity style={styles.button}>
           <Text

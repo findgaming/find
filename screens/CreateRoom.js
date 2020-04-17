@@ -13,7 +13,7 @@ const CreateRoom = ({ route, navigation }) => {
   const { title, lobbyId } = route.params;
   const [roomName, setRoomName] = useState('');
   const [players, setPlayers] = useState(0);
-  const [start, setStart] = useState('12:00:00');
+  const [start, setStart] = useState(0);
   // console.log('coming from lobbyID:', lobbyId);
   // console.log('coming from roomName:', roomName);
   // console.log('coming from players:', players);
@@ -22,9 +22,9 @@ const CreateRoom = ({ route, navigation }) => {
   // object to send in POST request
   const newRoomBody = {
     lobby_id: lobbyId,
-    start_time: start,
+    timer: start,
     name: roomName,
-    admin
+    admin_id: admin
   };
 
   // function to wrap everything in object and send off to backend
@@ -37,7 +37,7 @@ const CreateRoom = ({ route, navigation }) => {
     })
       .then(data => data.json())
       .then(myJson => {
-        console.log(myJson);
+        console.log('response from new room', myJson);
       })
       .catch(err => {
         console.log(`error: ${err}`);
@@ -65,8 +65,9 @@ const CreateRoom = ({ route, navigation }) => {
       <TextInput
         style={styles.input}
         autoCapitalize="none"
+        keyboardType="numeric"
         autoCorrect={false}
-        placeholder="Please enter time in form of HH:mm:00"
+        placeholder="Minutes Till Start"
         onChangeText={value => setStart(value)}
       />
 
