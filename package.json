@@ -30,7 +30,7 @@
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
     "expo-web-browser": "~8.1.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "pg": "^8.0.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
